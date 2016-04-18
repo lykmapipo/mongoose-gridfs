@@ -172,6 +172,7 @@ describe('GridFSStorage', function() {
 			});
 			Attachment = gridfs.model;
 
+			expect(gridfs.schema).to.exist;
 			expect(mongoose.model('Attachment')).to.exist;
 			expect(Attachment).to.exist;
 		});
