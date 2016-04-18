@@ -146,6 +146,54 @@ Attachment.unlink(<objectid>, function(error, unlinkedAttachment){
 
 ### Instance Methods
 
+#### `write(stream:Readable, done(error, createdFile))`
+Write a readable stream into gridfs storage
+
+##### Example
+```js
+var attachment = new Attachment({
+  filename:'sample.txt',
+  contentType:'text/plain'
+});
+
+attachment.write(
+fs.createReadStream('/some/path/sample.txt'),
+function(error, savedAttachment){
+  ...
+});
+```
+
+#### `read([done(error, fileContent)]):Stream`
+Read a file content from gridfs storage.
+
+##### Example for smaller file size
+```js
+attachment.read(function(error, content){
+  ...
+})
+```
+
+##### Example for larger file size
+```js
+var stream = attachment.read();
+
+stream.on('error', fn);
+
+stream.on('data', fn);
+
+stream.on('close', fn);
+```
+
+#### `unlink(done(error, unlinkedFile))`
+Remove file details and its content from underlying gridfs collection.
+
+##### Example
+```js
+attachment.unlink(<objectid>, function(error, unlinkedAttachment){
+  ...
+});
+```
+
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
 - [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
