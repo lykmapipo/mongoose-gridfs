@@ -52,6 +52,26 @@ Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
 });
 ```
 
+## API
+`mongoose-gridfs` wrap [gridfs-stream](https://github.com/aheckmann/gridfs-stream) to provide valid mongoose `schema` and `model` to use with `mongodb GridFS`.
+
+Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` and `mongoose model` or `schema` by using options.
+
+### Options
+- `collection` a root collection to use in GridFS. default to `fs`
+- `model` a model name to use in mongoose. default to `File`
+
+Example: Bind mongoose-gridfs to `attachments` GridFS collection and `Attachment` mongoose model
+```js
+//instantiate mongoose-gridfs
+var gridfs = require('mongoose-gridfs')({
+  collection:'attachments',
+  model:'Attachment'
+});
+```
+
+### Model
+
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
 - [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
