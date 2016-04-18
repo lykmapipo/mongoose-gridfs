@@ -35,34 +35,6 @@ gridfs.readById(<fileObjectId>,function(error,buffer){
 
 ```
 
-
-## MongoDB `fs.file` Structure
-```js
-{
-  "_id" : <ObjectId>,
-  "length" : <num>,
-  "chunkSize" : <num>,
-  "uploadDate" : <timestamp>,
-  "md5" : <hash>,
-  "filename" : <string>,
-  "contentType" : <string>,
-  "aliases" : <string array>,
-  "metadata" : <dataObject>,
-}
-```
-
-## multer `uploaded file` Structure
-```js
-{
-  "fieldname" : <string>,
-  "originalname" : <string>,
-  "encoding" : <string>,
-  "mimetype" : <string>,
-  "size" : <num>
-}
-```
-
-
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
 - [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
