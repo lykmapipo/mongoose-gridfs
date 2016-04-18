@@ -33,7 +33,9 @@ Attachment = gridfs.model;
 Attachment.write({
   filename:'sample.txt', 
   contentType:'text/plain'
-  }, fs.createReadStream('/some/path/sample.txt'), function(error,result){
+  }, 
+  fs.createReadStream('/some/path/sample.txt'), 
+  function(error, createdFile){
     ...
 });
 
@@ -87,6 +89,62 @@ var AttachmentSchema = gridfs.schema;
 //register and export a model
 module.export = mongoose.model('Attachment', AttachmentSchema);
 ```
+
+### Static Methods
+
+#### `write(fileDetails:Object, stream:Readable, done(error, createdFile))`
+Write a readable stream into gridfs storage
+
+##### Example
+```js
+Attachment.write({
+filename:'sample.txt',
+contentType:'text/plain'
+},
+fs.createReadStream('/some/path/sample.txt'),
+function(error, savedAttachment){
+  ...
+});
+```
+
+#### `readById(objectid:ObjectId, [done(error, fileContent)]):Stream`
+Read a file content from gridfs storage.
+
+##### Example for smaller file size
+```js
+Attachment.readById(<objectid>, function(error, content){
+  ...
+})
+```
+
+##### Example for larger file size
+```js
+var stream = Attachment.readById(<objectid>);
+
+stream.on('error', fn);
+
+stream.on('data', fn);
+
+stream.on('close', fn);
+```
+
+#### `unlinkById(objectid:ObjectId, done(error, unlinkedFile))`
+Remove file details and its content from underlying gridfs collection.
+
+##### Example
+```js
+Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
+  ...
+});
+
+or
+
+Attachment.unlink(<objectid>, function(error, unlinkedAttachment){
+  ...
+});
+```
+
+### Instance Methods
 
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
