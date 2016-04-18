@@ -29,8 +29,11 @@ var gridfs = require('mongoose-gridfs')({
 Attachment = gridfs.model;
 
 //create or save a file
-Attachment.create({filename:<filename>, contentType:<contentType>}, <readableStream>, function(error,result){
-  ...
+Attachment.create({
+  filename:<filename>, 
+  contentType:<contentType>
+  }, <readableStream>, function(error,result){
+    ...
 });
 
 //for larger file size
@@ -39,7 +42,12 @@ var stream  = Attachment.readById(<objectid>);
 
 //for smaller file size
 //read a file and receive a buffer
-Attachment.readById(<fileObjectId>, function(error, buffer){
+Attachment.readById(<objectid>, function(error, buffer){
+  ...
+});
+
+//remove file details and its content from gridfs
+Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
   ...
 });
 ```
@@ -47,7 +55,6 @@ Attachment.readById(<fileObjectId>, function(error, buffer){
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
 - [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
-
 
 ## Licence
 
