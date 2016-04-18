@@ -12,7 +12,7 @@ var isStream = require('is-stream');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var expect = require('chai').expect;
-var gridFSStorage = require(path.join(__dirname, '..', 'lib', 'storage'));
+var gridFSStorage = require(path.join(__dirname, '..'));
 
 describe('GridFSStorage', function() {
 
