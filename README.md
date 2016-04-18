@@ -15,24 +15,33 @@ $ npm install --save mongoose mongoose-gridfs
 ## Usage
 ```js
 var mongoose = require('mongoose');
-var gridfs = require('mongoose-gridfs')(<options>);
 
 //mongoose connect
 mongoose.connect('mongodb://localhost/test');
 
+//instantiate mongoose-gridfs
+var gridfs = require('mongoose-gridfs')({
+  collection:'attachments',
+  model:'Attachment'
+});
+
+//obtain a model
+Attachment = gridfs.model;
+
 //create or save a file
-gridfs.create(<fileDetails>,<readableStream>,function(error,result){
+Attachment.create({filename:<filename>, contentType:<contentType>}, <readableStream>, function(error,result){
   ...
 });
 
+//for larger file size
 //read a file and receive a stream
-var stream  = gridfs.readById(<fileObjectId>);
+var stream  = Attachment.readById(<objectid>);
 
+//for smaller file size
 //read a file and receive a buffer
-gridfs.readById(<fileObjectId>,function(error,buffer){
+Attachment.readById(<fileObjectId>, function(error, buffer){
   ...
 });
-
 ```
 
 ## Literature Reviewed
