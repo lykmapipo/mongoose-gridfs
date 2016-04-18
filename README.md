@@ -14,6 +14,7 @@ $ npm install --save mongoose mongoose-gridfs
 
 ## Usage
 ```js
+var fs = require('fs');
 var mongoose = require('mongoose');
 
 //mongoose connect
@@ -30,9 +31,9 @@ Attachment = gridfs.model;
 
 //create or save a file
 Attachment.write({
-  filename:<filename>, 
-  contentType:<contentType>
-  }, <readableStream>, function(error,result){
+  filename:'sample.txt', 
+  contentType:'text/plain'
+  }, fs.createReadStream('/some/path/sample.txt'), function(error,result){
     ...
 });
 
