@@ -29,7 +29,7 @@ var gridfs = require('mongoose-gridfs')({
 Attachment = gridfs.model;
 
 //create or save a file
-Attachment.create({
+Attachment.write({
   filename:<filename>, 
   contentType:<contentType>
   }, <readableStream>, function(error,result){
@@ -53,7 +53,7 @@ Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
 ```
 
 ## API
-`mongoose-gridfs` wrap [gridfs-stream](https://github.com/aheckmann/gridfs-stream) to provide valid mongoose `schema` and `model` to use with `mongodb GridFS`.
+`mongoose-gridfs` wrap [gridfs-stream](https://github.com/aheckmann/gridfs-stream) to provide valid mongoose `schema` and `model` to use with [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/).
 
 Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` and `mongoose model` or `schema` by using options.
 
@@ -61,7 +61,7 @@ Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` a
 - `collection` a root collection to use in GridFS. default to `fs`
 - `model` a model name to use in mongoose. default to `File`
 
-Example: Bind mongoose-gridfs to `attachments` GridFS collection and `Attachment` mongoose model
+Example
 ```js
 //instantiate mongoose-gridfs
 var gridfs = require('mongoose-gridfs')({
@@ -70,7 +70,22 @@ var gridfs = require('mongoose-gridfs')({
 });
 ```
 
-### Model
+### Schema & Model
+To obtain underlying model use
+```js
+var Attachment = gridfs.model
+```
+
+To obtain underlying schema for self model registration use
+```js
+var AttachmentSchema = gridfs.schema;
+
+//attach plugins
+//ensure indexes
+
+//register and export a model
+module.export = mongoose.model('Attachment', AttachmentSchema);
+```
 
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
