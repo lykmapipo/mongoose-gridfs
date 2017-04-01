@@ -63,8 +63,8 @@ Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` a
 ### Options
 - `collection` a root collection to use in GridFS. default to `fs`
 - `model` a model name to use in mongoose. default to `File`
-- `connection` number of mongoose connection to be used. default to 1
-- `pollingTime` time in milliseconds to check if the connection is yet established. default to 50
+- `connection` number of mongoose connection to be used. default to `1`
+- `pollingTime` time in milliseconds to check if the connection is yet established. default to `50`
 
 Example
 ```js
