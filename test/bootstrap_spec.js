@@ -10,19 +10,19 @@ var mongoose = require('mongoose');
  * @description wipe all mongoose model data and drop all indexes
  */
 function wipe(done) {
-	mongoose.connection.db.dropDatabase(done);
+    mongoose.connection.db.dropDatabase(done);
 }
 
 before(function(done) {
-	//setup database
-	mongoose.connection.on('connected', function() {
-		done();
-	});
+    //setup database
+    mongoose.connection.on('connected', function() {
+        done();
+    });
 
-	mongoose.connect('mongodb://localhost/mongoose-gridfs');
+    mongoose.connect('mongodb://localhost/mongoose-gridfs');
 });
 
 // restore initial environment
 after(function(done) {
-	wipe(done);
+    wipe(done);
 });
