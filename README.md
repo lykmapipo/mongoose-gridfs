@@ -18,12 +18,13 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 
 //mongoose connect
-mongoose.connect('mongodb://localhost/test');
+var connection = mongoose.connect('mongodb://localhost/test');
 
 //instantiate mongoose-gridfs
 var gridfs = require('mongoose-gridfs')({
   collection:'attachments',
-  model:'Attachment'
+  model:'Attachment',
+  mongooseConnection: connection
 });
 
 //obtain a model
