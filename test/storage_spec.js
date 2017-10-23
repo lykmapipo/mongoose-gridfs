@@ -21,7 +21,7 @@ describe('GridFSStorage', function() {
 
     it('should export a functional constructor', function() {
         expect(gridFSStorage).to.exist;
-        expect(gridFSStorage).to.be.a.function;
+        expect(gridFSStorage).to.be.a('function');
     });
 
     it('should expose underlying files collection', function() {
@@ -40,7 +40,7 @@ describe('GridFSStorage', function() {
 
             gridfs.write({
                 filename: 'text.txt',
-                contentType: mime.lookup('.txt')
+                contentType: mime.getType('.txt')
             }, readableStream, function(error, savedFile) {
 
                 expect(error).to.not.exist;
@@ -72,7 +72,7 @@ describe('GridFSStorage', function() {
 
             gridfs.write({
                 filename: 'text.txt',
-                contentType: mime.lookup('.txt')
+                contentType: mime.getType('.txt')
             }, readableStream, function(error, savedFile) {
 
                 expect(error).to.not.exist;
@@ -101,7 +101,7 @@ describe('GridFSStorage', function() {
 
             var writableStream = gridfs.write({
                 filename: 'text.txt',
-                contentType: mime.lookup('.txt')
+                contentType: mime.getType('.txt')
             }, readableStream);
 
             expect(isStream(writableStream)).to.be.true;
@@ -182,7 +182,7 @@ describe('GridFSStorage', function() {
 
                 var attachment = new Attachment({
                     filename: 'text2.txt',
-                    contentType: mime.lookup('.txt')
+                    contentType: mime.getType('.txt')
                 });
 
                 var readableStream =
@@ -252,7 +252,7 @@ describe('GridFSStorage', function() {
 
                 var attachment = {
                     filename: 'text2.txt',
-                    contentType: mime.lookup('.txt')
+                    contentType: mime.getType('.txt')
                 };
 
                 var readableStream =

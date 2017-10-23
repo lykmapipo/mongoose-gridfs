@@ -5,6 +5,7 @@ process.env.NODE_ENV = 'test';
 
 //dependencies
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 /**
  * @description wipe all mongoose model data and drop all indexes
