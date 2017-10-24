@@ -7,6 +7,6 @@ addons:
     packages:
     - mongodb-org-server
 node_js:
-  - "4"
+  - "8.6.0"
 before_script:
   - npm install -g grunt-cli
