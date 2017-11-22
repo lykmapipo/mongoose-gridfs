@@ -3,7 +3,7 @@ mongoose-gridfs
 
 [![Build Status](https://travis-ci.org/lykmapipo/mongoose-gridfs.svg?branch=master)](https://travis-ci.org/lykmapipo/mongoose-gridfs)
 
-mongoose gridfs on top of [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
+mongoose [gridfs](https://docs.mongodb.com/manual/core/gridfs/) on top of [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
 
 *Note!: Ensure mongoose connection before use*
 

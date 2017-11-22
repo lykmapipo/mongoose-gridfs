@@ -19,7 +19,9 @@
     "fs",
     "stream",
     "filesystem",
-    "mongo"
+    "mongo",
+    "file",
+    "storage"
   ],
   "author": "lykmapipo <lallyelias87@gmail.com>",
   "license": "MIT",
