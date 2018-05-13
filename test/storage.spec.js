@@ -1,23 +1,19 @@
 'use strict';
 
-/**
- * observation submission specification
- */
-
 // dependencies
-var path = require('path');
-var fs = require('fs');
-var mime = require('mime');
-var isStream = require('is-stream');
-var mongoose = require('mongoose');
-var _ = require('lodash');
-var expect = require('chai').expect;
-var gridFSStorage = require(path.join(__dirname, '..'));
+const path = require('path');
+const fs = require('fs');
+const mime = require('mime');
+const isStream = require('is-stream');
+const mongoose = require('mongoose');
+const _ = require('lodash');
+const expect = require('chai').expect;
+const gridFSStorage = require(path.join(__dirname, '..'));
 
 describe('GridFSStorage', function () {
 
   //collect ids
-  var ids = [];
+  const ids = [];
 
   it('should export a functional constructor', function () {
     expect(gridFSStorage).to.exist;
@@ -25,7 +21,7 @@ describe('GridFSStorage', function () {
   });
 
   it('should expose underlying files collection', function () {
-    var gridfs = gridFSStorage();
+    const gridfs = gridFSStorage();
     expect(gridfs.collection).to.exist;
   });
 
@@ -36,8 +32,8 @@ describe('GridFSStorage', function () {
       'should be able to write a readable stream to default `gridfs` collection',
       function (done) {
 
-        var gridfs = gridFSStorage();
-        var readableStream =
+        const gridfs = gridFSStorage();
+        const readableStream =
           fs.createReadStream(path.join(__dirname, 'fixtures',
             'text.txt'));
 
@@ -68,11 +64,11 @@ describe('GridFSStorage', function () {
       'should be able to write a readable stream to custom `gridfs` collection',
       function (done) {
 
-        var gridfs = gridFSStorage({
+        const gridfs = gridFSStorage({
           collection: 'attachments'
         });
 
-        var readableStream =
+        const readableStream =
           fs.createReadStream(path.join(__dirname, 'fixtures',
             'text.txt'));
 
@@ -102,12 +98,12 @@ describe('GridFSStorage', function () {
     it('should be able to return a writable stream if no callback',
       function (done) {
 
-        var gridfs = gridFSStorage();
-        var readableStream =
+        const gridfs = gridFSStorage();
+        const readableStream =
           fs.createReadStream(path.join(__dirname, 'fixtures',
             'text.txt'));
 
-        var writableStream = gridfs.write({
+        const writableStream = gridfs.write({
           filename: 'text.txt',
           contentType: mime.getType('.txt')
         }, readableStream);
@@ -125,7 +121,7 @@ describe('GridFSStorage', function () {
     it(
       'should be able to read file content to `Buffer` using it objectid',
       function (done) {
-        var gridfs = gridFSStorage();
+        const gridfs = gridFSStorage();
         gridfs.readById(ids[0], function (error, fileContent) {
 
           expect(error).to.not.exist;
@@ -139,8 +135,8 @@ describe('GridFSStorage', function () {
     it(
       'should be able to return readable stream if callback not provided',
       function (done) {
-        var gridfs = gridFSStorage();
-        var readableStream = gridfs.readById(ids[0]);
+        const gridfs = gridFSStorage();
+        const readableStream = gridfs.readById(ids[0]);
         expect(isStream(readableStream)).to.be.true;
         done();
       });
@@ -150,7 +146,7 @@ describe('GridFSStorage', function () {
   describe('find', function () {
     it('should be able to obtain file details using its objectid',
       function (done) {
-        var gridfs = gridFSStorage();
+        const gridfs = gridFSStorage();
         gridfs.findById(ids[0], function (error, foundFileDetails) {
 
           expect(error).to.not.exist;
@@ -165,7 +161,7 @@ describe('GridFSStorage', function () {
 
     it('should be able to remove a file using its objectid', function (
       done) {
-      var gridfs = gridFSStorage();
+      const gridfs = gridFSStorage();
       gridfs.unlinkById(ids[0], function (error, removedFileId) {
         expect(error).to.not.exist;
         expect(removedFileId).to.eql(ids[0]);
@@ -176,8 +172,8 @@ describe('GridFSStorage', function () {
   });
 
   describe('mongoose-model', function () {
-    var gridfs;
-    var Attachment;
+    let gridfs;
+    let Attachment;
 
     it('should be able to expose mongoose compactible model', function () {
       gridfs = gridFSStorage({
@@ -194,12 +190,12 @@ describe('GridFSStorage', function () {
     describe('instance', function () {
       it('should be able to write a file', function (done) {
 
-        var attachment = new Attachment({
+        const attachment = new Attachment({
           filename: 'text2.txt',
           contentType: mime.getType('.txt')
         });
 
-        var readableStream =
+        const readableStream =
           fs.createReadStream(path.join(__dirname, 'fixtures',
             'text.txt'));
 
@@ -268,12 +264,12 @@ describe('GridFSStorage', function () {
     describe('static', function () {
       it('should be able to write a file', function (done) {
 
-        var attachment = {
+        const attachment = {
           filename: 'text2.txt',
           contentType: mime.getType('.txt')
         };
 
-        var readableStream =
+        const readableStream =
           fs.createReadStream(path.join(__dirname, 'fixtures',
             'text.txt'));
 

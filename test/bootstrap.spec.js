@@ -4,7 +4,7 @@
 process.env.NODE_ENV = 'test';
 
 //dependencies
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 /**
