@@ -29,23 +29,27 @@
     "url": "https://github.com/lykmapipo/mongoose-gridfs/issues"
   },
   "dependencies": {
-    "@lykmapipo/gridfs-stream": "^1.2.0",
-    "lodash": "^4.17.10",
-    "stream-read": "^1.1.2"
+    "@lykmapipo/gridfs-stream": ">=1.2.0",
+    "lodash": ">=4.17.11",
+    "stream-read": ">=1.1.2"
+  },
+  "peerDependencies": {
+    "mongoose": ">=5.4.1"
   },
   "devDependencies": {
-    "async": "^2.6.1",
-    "chai": "^4.1.2",
+    "@lykmapipo/mongoose-test-helpers": ">=0.2.4",
+    "async": ">=2.6.1",
+    "chai": "^4.2.0",
     "grunt": "^1.0.3",
-    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
     "is-stream": "^1.1.0",
     "jshint-stylish": "^2.2.1",
     "load-grunt-tasks": "^4.0.0",
-    "mime": "^2.3.1",
+    "mime": "^2.4.0",
     "mocha": "^5.2.0",
-    "mongoose": "^5.2.5"
+    "mongoose": ">=5.4.1"
   },
   "engines": {
     "node": ">=8.6.0",

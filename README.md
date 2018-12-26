@@ -197,7 +197,9 @@ attachment.unlink(<objectid>, function(error, unlinkedAttachment){
 
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
+- [Node MongoDB GridFS](http://mongodb.github.io/node-mongodb-native/3.1/tutorials/gridfs/)
 - [gridfs-stream](https://github.com/aheckmann/gridfs-stream)
+- [New Streaming GridFS API](https://thecodebarbarian.com/mongodb-gridfs-stream)
 
 ## Licence
 
