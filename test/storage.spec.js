@@ -27,7 +27,7 @@ describe('GridFSStorage', () => {
 
 
   // writes
-  it('should to write to default gridfs collection', (done) => {
+  it('should write to default gridfs collection', (done) => {
     const gridfs = gridFSStorage();
     expect(gridfs.collection.s.name).to.exist;
     expect(gridfs.collection.s.name).to.be.equal('fs.files');
@@ -79,7 +79,7 @@ describe('GridFSStorage', () => {
     });
   });
 
-  it('should return a writable stream if no callback given', (done) => {
+  it('should return a writable stream if callback not provided', (done) => {
     const gridfs = gridFSStorage();
     const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
     const readableStream = fs.createReadStream(fromFile);
@@ -95,32 +95,33 @@ describe('GridFSStorage', () => {
 
   });
 
+
   // reads
-  describe.skip('read', () => {
+  it('should read file content to `Buffer` by id', (done) => {
+    const gridfs = gridFSStorage();
+    gridfs.readById(ids[0], (error, content) => {
+      expect(error).to.not.exist;
+      expect(content).to.exist;
+      expect(_.isBuffer(content)).to.be.true;
+      done(error, content);
+    });
+  });
 
-    it(
-      'should be able to read file content to `Buffer` using it objectid',
-      function (done) {
-        const gridfs = gridFSStorage();
-        gridfs.readById(ids[0], function (error, fileContent) {
+  it('should read file content to `Buffer` by filename', (done) => {
+    const gridfs = gridFSStorage();
+    gridfs.readByName('text.txt', (error, content) => {
+      expect(error).to.not.exist;
+      expect(content).to.exist;
+      expect(_.isBuffer(content)).to.be.true;
+      done(error, content);
+    });
+  });
 
-          expect(error).to.not.exist;
-          expect(fileContent).to.exist;
-          expect(_.isBuffer(fileContent)).to.be.true;
-
-          done(error, fileContent);
-        });
-      });
-
-    it(
-      'should be able to return readable stream if callback not provided',
-      function (done) {
-        const gridfs = gridFSStorage();
-        const readableStream = gridfs.readById(ids[0]);
-        expect(isStream(readableStream)).to.be.true;
-        done();
-      });
-
+  it('should return a readable stream if callback not provided', (done) => {
+    const gridfs = gridFSStorage();
+    const readableStream = gridfs.readById(ids[0]);
+    expect(isStream(readableStream)).to.be.true;
+    done();
   });
 
   // finders

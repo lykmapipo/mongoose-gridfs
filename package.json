@@ -29,7 +29,6 @@
     "url": "https://github.com/lykmapipo/mongoose-gridfs/issues"
   },
   "dependencies": {
-    "@lykmapipo/gridfs-stream": ">=1.2.0",
     "lodash": ">=4.17.11",
     "stream-read": ">=1.1.2"
   },
