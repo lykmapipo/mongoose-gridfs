@@ -57,7 +57,7 @@ Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
 ```
 
 ## API
-`mongoose-gridfs` wrap [gridfs-stream](https://github.com/aheckmann/gridfs-stream) to provide valid mongoose `schema` and `model` to use with [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/).
+`mongoose-gridfs` wrap [new gridfs api](http://mongodb.github.io/node-mongodb-native/3.1/tutorials/gridfs/) to provide valid mongoose `schema` and `model` to use with [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/).
 
 Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` and `mongoose model` or `schema` by using options.
 
