@@ -14,46 +14,35 @@ $ npm install --save mongoose mongoose-gridfs
 
 ## Usage
 ```js
-var fs = require('fs');
-var mongoose = require('mongoose');
+// dependencies
+const fs = require('fs');
+const mongoose = require('mongoose');
+const gridfs = require('mongoose-gridfs');
 
-//mongoose connect
+// ensure mongoose connect
 mongoose.connect('mongodb://localhost/test');
 
-//instantiate mongoose-gridfs
-var gridfs = require('mongoose-gridfs')({
-  collection:'attachments',
-  model:'Attachment',
+// instantiate mongoose-gridfs
+const { model: Attachment } = gridfs({
+  collection: 'attachments',
+  model: 'Attachment',
   mongooseConnection: mongoose.connection
 });
 
-//obtain a model
-Attachment = gridfs.model;
+// create or save a file to gridfs
+const readStream = fs.createReadStream('/some/path/sample.txt');
+const options = ({ filename: 'sample.txt', contentType: 'text/plain' });
+Attachment.write(options, readStream, (error, file) => { ... });
 
-//create or save a file
-Attachment.write({
-  filename:'sample.txt', 
-  contentType:'text/plain'
-  }, 
-  fs.createReadStream('/some/path/sample.txt'), 
-  function(error, createdFile){
-    ...
-});
 
-//for larger file size
-//read a file and receive a stream
-var stream  = Attachment.readById(<objectid>);
+// for larger file size, read a file and receive a readable stream
+const readStream = Attachment.readById(objectid);
 
-//for smaller file size
-//read a file and receive a buffer
-Attachment.readById(<objectid>, function(error, buffer){
-  ...
-});
+// for smaller file size, read a file and receive a buffer
+Attachment.readById(objectid, (error, buffer) => { ... });
 
-//remove file details and its content from gridfs
-Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
-  ...
-});
+// remove file details and its content from gridfs
+Attachment.unlinkById(objectid, (error) => { ... });
 ```
 
 ## API
@@ -67,27 +56,26 @@ Each instance of `mongoose-gridfs` is binded to a specific `GridFS collection` a
 
 Example
 ```js
-//instantiate mongoose-gridfs
-var gridfs = require('mongoose-gridfs')({
-  collection:'attachments',
-  model:'Attachment'
+const gridfs = require('mongoose-gridfs')({
+  collection: 'attachments',
+  model: 'Attachment'
 });
 ```
 
 ### Schema & Model
 To obtain underlying model use
 ```js
-var Attachment = gridfs.model
+const Attachment = gridfs.model
 ```
 
 To obtain underlying schema for self model registration use
 ```js
-var AttachmentSchema = gridfs.schema;
+const AttachmentSchema = gridfs.schema;
 
-//attach plugins
-//ensure indexes
+// attach plugins
+// ensure indexes
 
-//register and export a model
+// register and export a model
 module.export = mongoose.model('Attachment', AttachmentSchema);
 ```
 
@@ -98,14 +86,9 @@ Write a readable stream into gridfs storage
 
 ##### Example
 ```js
-Attachment.write({
-filename:'sample.txt',
-contentType:'text/plain'
-},
-fs.createReadStream('/some/path/sample.txt'),
-function(error, savedAttachment){
-  ...
-});
+const readStream = fs.createReadStream('/some/path/sample.txt');
+const options = ({ filename: 'sample.txt', contentType: 'text/plain' });
+Attachment.write(options, readStream, (error, attachment) => { ... });
 ```
 
 #### `readById(objectid:ObjectId, [done(error, fileContent)]):Stream`
@@ -113,20 +96,15 @@ Read a file content from gridfs storage.
 
 ##### Example for smaller file size
 ```js
-Attachment.readById(<objectid>, function(error, content){
-  ...
-})
+Attachment.readById(objectid, (error, content) => { ... });
 ```
 
 ##### Example for larger file size
 ```js
-var stream = Attachment.readById(<objectid>);
-
-stream.on('error', fn);
-
-stream.on('data', fn);
-
-stream.on('close', fn);
+const readStream = Attachment.readById(objectid);
+readStream.on('error', fn);
+readStream.on('data', fn);
+readStream.on('close', fn);
 ```
 
 #### `unlinkById(objectid:ObjectId, done(error, unlinkedFile))`
@@ -134,15 +112,8 @@ Remove file details and its content from underlying gridfs collection.
 
 ##### Example
 ```js
-Attachment.unlinkById(<objectid>, function(error, unlinkedAttachment){
-  ...
-});
-
-or
-
-Attachment.unlink(<objectid>, function(error, unlinkedAttachment){
-  ...
-});
+Attachment.unlinkById(objectid, (error, unlinkedAttachment) => { ... });
+Attachment.unlink(objectid, (error, unlinkedAttachment) => { ... });
 ```
 
 ### Instance Methods
@@ -152,16 +123,12 @@ Write a readable stream into gridfs storage
 
 ##### Example
 ```js
-var attachment = new Attachment({
-  filename:'sample.txt',
-  contentType:'text/plain'
+const readStream = fs.createReadStream('/some/path/sample.txt');
+const attachment = new Attachment({
+  filename: 'sample.txt',
+  contentType: 'text/plain'
 });
-
-attachment.write(
-fs.createReadStream('/some/path/sample.txt'),
-function(error, savedAttachment){
-  ...
-});
+attachment.write(readStream, function (error, attachment) => { ... });
 ```
 
 #### `read([done(error, fileContent)]):Stream`
@@ -169,20 +136,16 @@ Read a file content from gridfs storage.
 
 ##### Example for smaller file size
 ```js
-attachment.read(function(error, content){
-  ...
-})
+attachment.read((error, content) => { ... });
+
 ```
 
 ##### Example for larger file size
 ```js
-var stream = attachment.read();
-
-stream.on('error', fn);
-
-stream.on('data', fn);
-
-stream.on('close', fn);
+const readStream = attachment.read();
+readStream.on('error', fn);
+readStream.on('data', fn);
+readStream.on('close', fn);
 ```
 
 #### `unlink(done(error, unlinkedFile))`
@@ -190,9 +153,7 @@ Remove file details and its content from underlying gridfs collection.
 
 ##### Example
 ```js
-attachment.unlink(<objectid>, function(error, unlinkedAttachment){
-  ...
-});
+attachment.unlink((error, unlinkedAttachment) => { ... });
 ```
 
 ## Literature Reviewed
