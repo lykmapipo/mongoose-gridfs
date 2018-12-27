@@ -155,16 +155,14 @@ describe('GridFSStorage', () => {
     });
   });
 
+
   // model
-  describe.skip('mongoose-model', () => {
+  describe('mongoose model', () => {
     let gridfs;
     let Attachment;
 
-    it('should be able to expose mongoose compactible model', () => {
-      gridfs = gridFSStorage({
-        collection: 'attachments',
-        model: 'Attachment'
-      });
+    it('should expose mongoose compactible model', () => {
+      gridfs = gridFSStorage({ collection: 'attachments', model: 'Attachment' });
       Attachment = gridfs.model;
 
       expect(gridfs.schema).to.exist;
@@ -172,141 +170,117 @@ describe('GridFSStorage', () => {
       expect(Attachment).to.exist;
     });
 
-    describe('instance', () => {
-      it('should be able to write a file', function (done) {
-
-        const attachment = new Attachment({
-          filename: 'text2.txt',
-          contentType: mime.getType('.txt')
-        });
-
-        const readableStream =
-          fs.createReadStream(path.join(__dirname, 'fixtures',
-            'text.txt'));
-
-        attachment.write(readableStream, function (error,
-          savedFile) {
-
-          expect(error).to.not.exist;
-          expect(savedFile).to.exist;
-
-          expect(savedFile._id).to.exist;
-          expect(savedFile.filename).to.exist;
-          expect(savedFile.contentType).to.exist;
-          expect(savedFile.length).to.exist;
-          expect(savedFile.chunkSize).to.exist;
-          expect(savedFile.uploadDate).to.exist;
-          expect(savedFile.md5).to.exist;
-
-          ids.push(savedFile._id);
-
-          done(error, savedFile);
-        });
-
+    // instance
+    it('instance should write a file', (done) => {
+      const attachment = new Attachment({
+        filename: 'text2.txt',
+        contentType: mime.getType('.txt')
       });
 
-      it('should be able to read file content', function (done) {
-        Attachment.findById(ids[2], function (error, attachment) {
-          if (error) {
-            done(error);
-          } else {
-            attachment.read(function (error, content) {
-              expect(error).to.not.exist;
-              expect(content).to.exist;
-              expect(_.isBuffer(content)).to.be.true;
-              done(error, content);
-            });
-          }
-        });
+      const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+      const readableStream = fs.createReadStream(fromFile);
+
+      attachment.write(readableStream, (error, file) => {
+        expect(error).to.not.exist;
+        expect(file).to.exist;
+        expect(file._id).to.exist;
+        expect(file.filename).to.exist;
+        expect(file.contentType).to.exist;
+        expect(file.length).to.exist;
+        expect(file.chunkSize).to.exist;
+        expect(file.uploadDate).to.exist;
+        expect(file.md5).to.exist;
+        ids.push(file._id);
+        done(error, file);
       });
 
-      it('should be able to unlink file', function (done) {
-        Attachment.findById(ids[2], function (error, attachment) {
-          if (error) {
-            done(error);
-          } else {
-            attachment.unlink(function (error,
-              unlinkedAttachment) {
-              expect(error).to.not.exist;
-              expect(unlinkedAttachment).to.exist;
+    });
 
-              expect(unlinkedAttachment._id).to.exist;
-              expect(unlinkedAttachment.filename).to.exist;
-              expect(unlinkedAttachment.contentType).to
-                .exist;
-              expect(unlinkedAttachment.length).to.exist;
-              expect(unlinkedAttachment.chunkSize).to.exist;
-              expect(unlinkedAttachment.uploadDate).to.exist;
-              expect(unlinkedAttachment.md5).to.exist;
-
-              done(error, unlinkedAttachment);
-            });
-          }
-        });
+    it('instance should read a file content', (done) => {
+      Attachment.findById(ids[2], (error, attachment) => {
+        if (error) {
+          done(error);
+        } else {
+          attachment.read((error, content) => {
+            expect(error).to.not.exist;
+            expect(content).to.exist;
+            expect(_.isBuffer(content)).to.be.true;
+            done(error, content);
+          });
+        }
       });
     });
 
-    describe('static', () => {
-      it('should be able to write a file', function (done) {
-
-        const attachment = {
-          filename: 'text2.txt',
-          contentType: mime.getType('.txt')
-        };
-
-        const readableStream =
-          fs.createReadStream(path.join(__dirname, 'fixtures',
-            'text.txt'));
-
-        Attachment.write(attachment, readableStream, function (
-          error, savedFile) {
-
-          expect(error).to.not.exist;
-          expect(savedFile).to.exist;
-
-          expect(savedFile._id).to.exist;
-          expect(savedFile.filename).to.exist;
-          expect(savedFile.contentType).to.exist;
-          expect(savedFile.length).to.exist;
-          expect(savedFile.chunkSize).to.exist;
-          expect(savedFile.uploadDate).to.exist;
-          expect(savedFile.md5).to.exist;
-
-          ids.push(savedFile._id);
-
-          done(error, savedFile);
-        });
-
-      });
-
-      it('should be able to read a file content', function (done) {
-        Attachment.readById(ids[3], function (error, content) {
-          expect(error).to.not.exist;
-          expect(content).to.exist;
-          expect(_.isBuffer(content)).to.be.true;
-          done(error, content);
-        });
-      });
-
-      it('should be able to unlink file', function (done) {
-        Attachment.unlinkById(ids[3], function (error,
-          unlinkedAttachment) {
-          expect(error).to.not.exist;
-          expect(unlinkedAttachment).to.exist;
-
-          expect(unlinkedAttachment._id).to.exist;
-          expect(unlinkedAttachment.filename).to.exist;
-          expect(unlinkedAttachment.contentType).to.exist;
-          expect(unlinkedAttachment.length).to.exist;
-          expect(unlinkedAttachment.chunkSize).to.exist;
-          expect(unlinkedAttachment.uploadDate).to.exist;
-          expect(unlinkedAttachment.md5).to.exist;
-
-          done(error, unlinkedAttachment);
-        });
+    it('instance should unlink a file', (done) => {
+      Attachment.findById(ids[2], (error, attachment) => {
+        if (error) {
+          done(error);
+        } else {
+          attachment.unlink((error, file) => {
+            expect(error).to.not.exist;
+            expect(file).to.exist;
+            expect(file._id).to.exist;
+            expect(file.filename).to.exist;
+            expect(file.contentType).to.exist;
+            expect(file.length).to.exist;
+            expect(file.chunkSize).to.exist;
+            expect(file.uploadDate).to.exist;
+            expect(file.md5).to.exist;
+            done(error, file);
+          });
+        }
       });
     });
 
+    // static
+    it('static should write a file', (done) => {
+      const attachment = {
+        filename: 'text2.txt',
+        contentType: mime.getType('.txt')
+      };
+
+      const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+      const readableStream = fs.createReadStream(fromFile);
+
+      Attachment.write(attachment, readableStream, (error, file) => {
+        expect(error).to.not.exist;
+        expect(file).to.exist;
+        expect(file._id).to.exist;
+        expect(file.filename).to.exist;
+        expect(file.contentType).to.exist;
+        expect(file.length).to.exist;
+        expect(file.chunkSize).to.exist;
+        expect(file.uploadDate).to.exist;
+        expect(file.md5).to.exist;
+        ids.push(file._id);
+        done(error, file);
+      });
+
+    });
+
+    it('static should read a file content', (done) => {
+      Attachment.readById(ids[3], (error, content) => {
+        expect(error).to.not.exist;
+        expect(content).to.exist;
+        expect(_.isBuffer(content)).to.be.true;
+        done(error, content);
+      });
+    });
+
+    it('static should unlink a file', (done) => {
+      Attachment.unlinkById(ids[3], (error, file) => {
+        expect(error).to.not.exist;
+        expect(file).to.exist;
+        expect(file._id).to.exist;
+        expect(file.filename).to.exist;
+        expect(file.contentType).to.exist;
+        expect(file.length).to.exist;
+        expect(file.chunkSize).to.exist;
+        expect(file.uploadDate).to.exist;
+        expect(file.md5).to.exist;
+        done(error, file);
+      });
+    });
   });
 
 });
