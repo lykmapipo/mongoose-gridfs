@@ -124,19 +124,24 @@ describe('GridFSStorage', () => {
     done();
   });
 
+
   // finders
-  describe.skip('find', () => {
-    it('should be able to obtain file details using its objectid',
-      function (done) {
-        const gridfs = gridFSStorage();
-        gridfs.findById(ids[0], function (error, foundFileDetails) {
+  it('should obtain file details using its id', (done) => {
+    const gridfs = gridFSStorage();
+    gridfs.findById(ids[0], (error, file) => {
+      expect(error).to.not.exist;
+      expect(file._id).to.eql(ids[0]);
+      done(error, file);
+    });
+  });
 
-          expect(error).to.not.exist;
-          expect(foundFileDetails._id).to.eql(ids[0]);
-
-          done(error, foundFileDetails);
-        });
-      });
+  it('should obtain file details using its filename', (done) => {
+    const gridfs = gridFSStorage();
+    gridfs.findOne({ filename: 'text.txt' }, (error, file) => {
+      expect(error).to.not.exist;
+      expect(file._id).to.eql(ids[0]);
+      done(error, file);
+    });
   });
 
   // removers
