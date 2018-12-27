@@ -144,19 +144,15 @@ describe('GridFSStorage', () => {
     });
   });
 
+
   // removers
-  describe.skip('remove', () => {
-
-    it('should be able to remove a file using its objectid', function (
-      done) {
-      const gridfs = gridFSStorage();
-      gridfs.unlinkById(ids[0], function (error, removedFileId) {
-        expect(error).to.not.exist;
-        expect(removedFileId).to.eql(ids[0]);
-        done(error, removedFileId);
-      });
+  it('should remove a file using its id', (done) => {
+    const gridfs = gridFSStorage();
+    gridfs.unlinkById(ids[0], (error, fileId) => {
+      expect(error).to.not.exist;
+      expect(fileId).to.eql(ids[0]);
+      done(error, fileId);
     });
-
   });
 
   // model
