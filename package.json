@@ -1,6 +1,6 @@
 {
   "name": "mongoose-gridfs",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "mongoose gridfs on top of gridfs-stream",
   "main": "index.js",
   "scripts": {
@@ -15,13 +15,13 @@
     "mongoose",
     "mongodb",
     "gridfs",
-    "gridfs-stream",
     "fs",
     "stream",
     "filesystem",
     "mongo",
     "file",
-    "storage"
+    "storage",
+    "bucket"
   ],
   "author": "lykmapipo <lallyelias87@gmail.com>",
   "license": "MIT",
