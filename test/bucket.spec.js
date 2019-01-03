@@ -27,14 +27,14 @@ describe.only('Bucket', () => {
   });
 
   it('should expose default options', () => {
-    expect(Bucket.DEFAULT_NAME).to.exist;
-    expect(Bucket.DEFAULT_NAME).to.be.equal('fs');
-    expect(Bucket.DEFAULT_MODEL_NAME).to.exist;
-    expect(Bucket.DEFAULT_MODEL_NAME).to.be.equal('File');
-    expect(Bucket.DEFAULT_CHUNK_SIZE).to.exist;
-    expect(Bucket.DEFAULT_CHUNK_SIZE).to.equal(255 * 1024);
-    expect(Bucket.DEFAULT_OPTIONS).to.exist;
-    expect(Bucket.DEFAULT_OPTIONS).to.be.eql({
+    expect(Bucket.DEFAULT_BUCKET_NAME).to.exist;
+    expect(Bucket.DEFAULT_BUCKET_NAME).to.be.equal('fs');
+    expect(Bucket.DEFAULT_BUCKET_MODEL_NAME).to.exist;
+    expect(Bucket.DEFAULT_BUCKET_MODEL_NAME).to.be.equal('File');
+    expect(Bucket.DEFAULT_BUCKET_CHUNK_SIZE).to.exist;
+    expect(Bucket.DEFAULT_BUCKET_CHUNK_SIZE).to.equal(255 * 1024);
+    expect(Bucket.DEFAULT_BUCKET_OPTIONS).to.exist;
+    expect(Bucket.DEFAULT_BUCKET_OPTIONS).to.be.eql({
       bucketName: 'fs',
       chunkSizeBytes: 255 * 1024
     });
