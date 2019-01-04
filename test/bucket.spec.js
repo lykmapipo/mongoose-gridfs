@@ -3,6 +3,8 @@
 
 /* dependencies */
 const path = require('path');
+const fs = require('fs');
+const mime = require('mime');
 const { expect } = require('chai');
 const {
   DEFAULT_BUCKET_NAME,
@@ -15,8 +17,8 @@ const {
 
 
 describe.only('mongoose gridfs', () => {
-  // collect ids
-  // const ids = [];
+  // collect file ids
+  const ids = [];
 
   it('should export GridFSBucket', () => {
     expect(GridFSBucket).to.exist;
@@ -70,4 +72,31 @@ describe.only('mongoose gridfs', () => {
     expect(bucket.collectionName).to.be.equal('songs.files');
   });
 
+  // writes
+  it('should write to default bucket', (done) => {
+    const bucket = createBucket();
+    expect(bucket.collection).to.exist;
+    expect(bucket.collectionName).to.exist;
+    expect(bucket.collectionName).to.be.equal('fs.files');
+
+    const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+    const readableStream = fs.createReadStream(fromFile);
+
+    const filename = 'text.txt';
+    const contentType = mime.getType('.txt');
+    const options = { filename, contentType };
+    bucket.writeFile(options, readableStream, (error, file) => {
+      expect(error).to.not.exist;
+      expect(file).to.exist;
+      expect(file._id).to.exist;
+      expect(file.filename).to.exist;
+      expect(file.contentType).to.exist;
+      expect(file.length).to.exist;
+      expect(file.chunkSize).to.exist;
+      expect(file.uploadDate).to.exist;
+      expect(file.md5).to.exist;
+      ids.push(file._id);
+      done(error, file);
+    });
+  });
 });
