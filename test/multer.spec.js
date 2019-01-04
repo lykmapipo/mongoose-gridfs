@@ -62,7 +62,7 @@ describe.only('multer storage', () => {
       expect(req.file.aliases).to.be.eql(['lyrics']);
       expect(req.file.bucketName).to.be.equal(storage.bucketName);
 
-      done();
+      done(error, req);
     });
   });
 
@@ -86,6 +86,59 @@ describe.only('multer storage', () => {
       expect(error.storageErrors).to.be.eql([]);
 
       done();
+    });
+  });
+
+  it('should process multiple files', (done) => {
+    const storage = createBucket();
+    const upload = multer({ storage });
+
+    const form = new UploadForm();
+    const parser = upload.array('lyrics');
+
+    const content = file('text.txt');
+    form.append('lyrics', content, 'text.txt');
+    form.append('lyrics', content, 'text.dat');
+
+    submitForm(parser, form, (error, req) => {
+      expect(error).to.not.exist;
+      expect(req.files[0].fieldname).to.be.equal('lyrics');
+      expect(req.files[0].originalname).to.be.equal('text.txt');
+      expect(req.files[0].size).to.be.equal(fileSize('text.txt'));
+      expect(req.files[0].bucketName).to.be.equal(storage.bucketName);
+
+      done(error, req);
+    });
+  });
+
+  it('should process multiple files', (done) => {
+    const storage = createBucket();
+    const upload = multer({ storage });
+
+    const form = new UploadForm();
+    const parser = upload.fields([
+      { name: 'en', maxCount: 1 },
+      { name: 'sw', maxCount: 1 }
+    ]);
+
+    const content = file('text.txt');
+    form.append('en', content, 'en.txt');
+    form.append('sw', content, 'sw.txt');
+
+    submitForm(parser, form, (error, req) => {
+      expect(error).to.not.exist;
+
+      expect(req.files.en[0].fieldname).to.be.equal('en');
+      expect(req.files.en[0].originalname).to.be.equal('en.txt');
+      expect(req.files.en[0].size).to.be.equal(fileSize('text.txt'));
+      expect(req.files.en[0].bucketName).to.be.equal(storage.bucketName);
+
+      expect(req.files.sw[0].fieldname).to.be.equal('sw');
+      expect(req.files.sw[0].originalname).to.be.equal('sw.txt');
+      expect(req.files.sw[0].size).to.be.equal(fileSize('text.txt'));
+      expect(req.files.sw[0].bucketName).to.be.equal(storage.bucketName);
+
+      done(error, req);
     });
   });
 
