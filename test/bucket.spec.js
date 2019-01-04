@@ -50,7 +50,7 @@ describe.only('mongoose gridfs', () => {
     });
   });
 
-  it('should get default bucket details', () => {
+  it('should create default bucket', () => {
     const bucket = createBucket();
     expect(bucket.bucketName).to.exist;
     expect(bucket.bucketName).to.be.equal('fs');
@@ -60,14 +60,14 @@ describe.only('mongoose gridfs', () => {
     expect(bucket.collectionName).to.be.equal('fs.files');
   });
 
-  it('should get custom bucket details', () => {
-    const bucket = createBucket({ bucketName: 'song' });
+  it('should create custom bucket', () => {
+    const bucket = createBucket({ bucketName: 'songs' });
     expect(bucket.bucketName).to.exist;
-    expect(bucket.bucketName).to.be.equal('song');
+    expect(bucket.bucketName).to.be.equal('songs');
 
     expect(bucket.collection).to.exist;
     expect(bucket.collectionName).to.exist;
-    expect(bucket.collectionName).to.be.equal('song.files');
+    expect(bucket.collectionName).to.be.equal('songs.files');
   });
 
 });
