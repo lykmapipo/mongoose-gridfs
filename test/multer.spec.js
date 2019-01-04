@@ -18,8 +18,8 @@ const file = name => fs.createReadStream(path.join(__dirname, 'fixtures', name))
 const fileSize = name => fs.statSync(path.join(__dirname, 'fixtures', name)).size;
 
 const submitForm = (multer, form, cb) => {
-  form.getLength((err, length) => {
-    if (err) { return cb(err); }
+  form.getLength((error, length) => {
+    if (error) { return cb(error); }
 
     const req = new stream.PassThrough();
 
@@ -31,8 +31,8 @@ const submitForm = (multer, form, cb) => {
       'content-length': length
     };
 
-    multer(req, null, (err) => {
-      onFinished(req, () => cb(err, req));
+    multer(req, null, (error) => {
+      onFinished(req, () => cb(error, req));
     });
   });
 };
@@ -52,14 +52,37 @@ describe.only('multer storage', () => {
     form.append('aliases', aliases);
     form.append('text', file('text.txt'));
 
-    submitForm(parser, form, (err, req) => {
-      expect(err).to.not.exist;
+    submitForm(parser, form, (error, req) => {
+      expect(error).to.not.exist;
       expect(req.body.name).to.be.equal('Lyrics');
       expect(req.body.aliases).to.be.equal('lyrics');
       expect(req.file.fieldname).to.be.equal('text');
       expect(req.file.originalname).to.be.equal('text.txt');
       expect(req.file.size).to.be.equal(fileSize('text.txt'));
       expect(req.file.aliases).to.be.eql(['lyrics']);
+
+      done();
+    });
+  });
+
+  it('should remove uploaded files on error', (done) => {
+    const storage = createBucket();
+    const upload = multer({ storage });
+
+    const form = new UploadForm();
+    const parser = upload.single('text');
+
+    const aliases = 'lyrics';
+    form.append('name', 'Lyrics');
+    form.append('aliases', aliases);
+    form.append('text', file('text.txt'));
+    form.append('_text', file('text.txt'));
+
+    submitForm(parser, form, (error) => {
+      expect(error).to.exist;
+      expect(error.code).to.be.equal('LIMIT_UNEXPECTED_FILE');
+      expect(error.field).to.be.equal('_text');
+      expect(error.storageErrors).to.be.eql([]);
 
       done();
     });
