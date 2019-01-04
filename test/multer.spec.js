@@ -60,6 +60,7 @@ describe.only('multer storage', () => {
       expect(req.file.originalname).to.be.equal('text.txt');
       expect(req.file.size).to.be.equal(fileSize('text.txt'));
       expect(req.file.aliases).to.be.eql(['lyrics']);
+      expect(req.file.bucketName).to.be.equal(storage.bucketName);
 
       done();
     });
