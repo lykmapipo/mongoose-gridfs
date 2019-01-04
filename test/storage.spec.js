@@ -15,26 +15,6 @@ describe('GridFSStorage', () => {
   const ids = [];
 
 
-  // finders
-  it('should obtain file details using its id', (done) => {
-    const gridfs = gridFSStorage();
-    gridfs.findById(ids[0], (error, file) => {
-      expect(error).to.not.exist;
-      expect(file._id).to.eql(ids[0]);
-      done(error, file);
-    });
-  });
-
-  it('should obtain file details using its filename', (done) => {
-    const gridfs = gridFSStorage();
-    gridfs.findOne({ filename: 'text.txt' }, (error, file) => {
-      expect(error).to.not.exist;
-      expect(file._id).to.eql(ids[0]);
-      done(error, file);
-    });
-  });
-
-
   // model
   describe('mongoose model', () => {
     let gridfs;

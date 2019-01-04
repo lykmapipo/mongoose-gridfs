@@ -179,6 +179,37 @@ describe.only('mongoose gridfs', () => {
     done();
   });
 
+
+  // finders
+  it('should obtain file details using its _id', (done) => {
+    const bucket = createBucket();
+    const _id = ids[0];
+    bucket.findOne({ _id }, (error, file) => {
+      expect(error).to.not.exist;
+      expect(file._id).to.eql(ids[0]);
+      done(error, file);
+    });
+  });
+
+  it('should obtain file details using its filename', (done) => {
+    const bucket = createBucket();
+    bucket.findOne({ filename: 'text.txt' }, (error, file) => {
+      expect(error).to.not.exist;
+      expect(file._id).to.eql(ids[0]);
+      done(error, file);
+    });
+  });
+
+  it('should obtain file details using its _id', (done) => {
+    const bucket = createBucket();
+    bucket.findById(ids[0], (error, file) => {
+      expect(error).to.not.exist;
+      expect(file._id).to.eql(ids[0]);
+      done(error, file);
+    });
+  });
+
+
   // removers
   it('should remove a file using its id', (done) => {
     const bucket = createBucket();
