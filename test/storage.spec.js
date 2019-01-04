@@ -14,7 +14,6 @@ describe('GridFSStorage', () => {
   // collect ids
   const ids = [];
 
-
   // model
   describe('mongoose model', () => {
     let gridfs;
