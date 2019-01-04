@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
 const mime = require('mime');
-const isStream = require('is-stream');
 const mongoose = require('mongoose');
 const expect = require('chai').expect;
 const gridFSStorage = require(path.join(__dirname, '..'));
@@ -14,34 +13,6 @@ describe('GridFSStorage', () => {
 
   // collect ids
   const ids = [];
-
-  // reads
-  it('should read file content to `Buffer` by id', (done) => {
-    const gridfs = gridFSStorage();
-    gridfs.readById(ids[0], (error, content) => {
-      expect(error).to.not.exist;
-      expect(content).to.exist;
-      expect(_.isBuffer(content)).to.be.true;
-      done(error, content);
-    });
-  });
-
-  it('should read file content to `Buffer` by filename', (done) => {
-    const gridfs = gridFSStorage();
-    gridfs.readByName('text.txt', (error, content) => {
-      expect(error).to.not.exist;
-      expect(content).to.exist;
-      expect(_.isBuffer(content)).to.be.true;
-      done(error, content);
-    });
-  });
-
-  it('should return a readable stream if callback not provided', (done) => {
-    const gridfs = gridFSStorage();
-    const readableStream = gridfs.readById(ids[0]);
-    expect(isStream(readableStream)).to.be.true;
-    done();
-  });
 
 
   // finders
@@ -60,17 +31,6 @@ describe('GridFSStorage', () => {
       expect(error).to.not.exist;
       expect(file._id).to.eql(ids[0]);
       done(error, file);
-    });
-  });
-
-
-  // removers
-  it('should remove a file using its id', (done) => {
-    const gridfs = gridFSStorage();
-    gridfs.unlinkById(ids[0], (error, fileId) => {
-      expect(error).to.not.exist;
-      expect(fileId).to.eql(ids[0]);
-      done(error, fileId);
     });
   });
 

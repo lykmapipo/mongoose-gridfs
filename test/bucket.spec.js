@@ -179,4 +179,14 @@ describe.only('mongoose gridfs', () => {
     done();
   });
 
+  // removers
+  it('should remove a file using its id', (done) => {
+    const bucket = createBucket();
+    bucket.deleteFile(ids[0], (error, result) => {
+      expect(error).to.not.exist;
+      expect(result).to.eql(ids[0]);
+      done(error, result);
+    });
+  });
+
 });
