@@ -9,19 +9,20 @@ const {
   DEFAULT_BUCKET_MODEL_NAME,
   DEFAULT_BUCKET_CHUNK_SIZE,
   DEFAULT_BUCKET_OPTIONS,
+  createBucket,
   GridFSBucket
 } = require(path.join(__dirname, '..', 'lib', 'bucket'));
 
 
-describe.only('Bucket', () => {
-  it('should be a functional constructor', () => {
+describe.only('mongoose gridfs', () => {
+  // collect ids
+  // const ids = [];
+
+  it('should export GridFSBucket', () => {
     expect(GridFSBucket).to.exist;
     expect(GridFSBucket).to.be.a('function');
     expect(GridFSBucket.name).to.be.equal('GridFSBucket');
     expect(GridFSBucket).to.have.length(2);
-  });
-
-  it('should be a GridFSBucket', () => {
     expect(GridFSBucket.prototype.openUploadStream).to.exist;
     expect(GridFSBucket.prototype.openUploadStreamWithId).to.exist;
     expect(GridFSBucket.prototype.openDownloadStream).to.exist;
@@ -31,7 +32,6 @@ describe.only('Bucket', () => {
     expect(GridFSBucket.prototype.rename).to.exist;
     expect(GridFSBucket.prototype.drop).to.exist;
     expect(GridFSBucket.prototype.getLogger).to.exist;
-    // custom
     expect(GridFSBucket.prototype.createWriteStream).to.exist;
     expect(GridFSBucket.prototype.createReadStream).to.exist;
   });
@@ -49,4 +49,25 @@ describe.only('Bucket', () => {
       chunkSizeBytes: 255 * 1024
     });
   });
+
+  it('should get default bucket details', () => {
+    const bucket = createBucket();
+    expect(bucket.bucketName).to.exist;
+    expect(bucket.bucketName).to.be.equal('fs');
+
+    expect(bucket.collection).to.exist;
+    expect(bucket.collectionName).to.exist;
+    expect(bucket.collectionName).to.be.equal('fs.files');
+  });
+
+  it('should get custom bucket details', () => {
+    const bucket = createBucket({ bucketName: 'song' });
+    expect(bucket.bucketName).to.exist;
+    expect(bucket.bucketName).to.be.equal('song');
+
+    expect(bucket.collection).to.exist;
+    expect(bucket.collectionName).to.exist;
+    expect(bucket.collectionName).to.be.equal('song.files');
+  });
+
 });
