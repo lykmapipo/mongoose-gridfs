@@ -3,8 +3,10 @@
 
 /* dependencies */
 const path = require('path');
+const _ = require('lodash');
 const fs = require('fs');
 const mime = require('mime');
+const isStream = require('is-stream');
 const { expect } = require('chai');
 const {
   DEFAULT_BUCKET_NAME,
@@ -72,7 +74,7 @@ describe.only('mongoose gridfs', () => {
     expect(bucket.collectionName).to.be.equal('songs.files');
   });
 
-  // writes
+  // writers
   it('should write to default bucket', (done) => {
     const bucket = createBucket();
     expect(bucket.collection).to.exist;
@@ -99,4 +101,87 @@ describe.only('mongoose gridfs', () => {
       done(error, file);
     });
   });
+
+  it('should write to custome bucket', (done) => {
+    const bucket = createBucket({ bucketName: 'lyrics' });
+    expect(bucket.collection).to.exist;
+    expect(bucket.collectionName).to.exist;
+    expect(bucket.collectionName).to.be.equal('lyrics.files');
+
+    const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+    const readableStream = fs.createReadStream(fromFile);
+
+    const filename = 'text.txt';
+    const contentType = mime.getType('.txt');
+    const options = { filename, contentType };
+    bucket.writeFile(options, readableStream, (error, file) => {
+      expect(error).to.not.exist;
+      expect(file).to.exist;
+      expect(file._id).to.exist;
+      expect(file.filename).to.exist;
+      expect(file.contentType).to.exist;
+      expect(file.length).to.exist;
+      expect(file.chunkSize).to.exist;
+      expect(file.uploadDate).to.exist;
+      expect(file.md5).to.exist;
+      ids.push(file._id);
+      done(error, file);
+    });
+  });
+
+  it('should return a writable stream if callback not provided', (done) => {
+    const bucket = createBucket();
+    const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+    const readableStream = fs.createReadStream(fromFile);
+
+    const filename = 'text.txt';
+    const contentType = mime.getType('.txt');
+    const options = { filename, contentType };
+    const writestream = bucket.writeFile(options, readableStream);
+
+    expect(writestream).to.exist;
+    expect(isStream(writestream)).to.be.true;
+
+    // handle errors
+    writestream.on('error', function (error) {
+      return done(error);
+    });
+
+    // finalize write
+    writestream.on('finish', function (file) {
+      return done(null, file);
+    });
+  });
+
+  // readers
+  it('should read file content to `Buffer` by _id', (done) => {
+    const bucket = createBucket();
+    const options = { _id: ids[0] };
+    bucket.readFile(options, (error, content) => {
+      expect(error).to.not.exist;
+      expect(content).to.exist;
+      expect(_.isBuffer(content)).to.be.true;
+      done(error, content);
+    });
+  });
+
+  it('should read file content to `Buffer` by filename', (done) => {
+    const bucket = createBucket();
+    const options = { filename: 'text.txt' };
+    bucket.readFile(options, (error, content) => {
+      expect(error).to.not.exist;
+      expect(content).to.exist;
+      expect(_.isBuffer(content)).to.be.true;
+      done(error, content);
+    });
+  });
+
+  it('should return a readable stream if callback not provided', (done) => {
+    const bucket = createBucket();
+    const options = { filename: 'text.txt' };
+    const readstream = bucket.readFile(options);
+    expect(isStream(readstream)).to.be.true;
+    done();
+  });
+
 });
