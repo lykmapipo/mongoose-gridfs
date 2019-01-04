@@ -65,14 +65,15 @@ describe.only('mongoose gridfs', () => {
   });
 
   it('should create custom bucket', () => {
-    const bucket = createBucket({ bucketName: 'songs' });
+    const bucket = createBucket({ bucketName: 'lyrics' });
     expect(bucket.bucketName).to.exist;
-    expect(bucket.bucketName).to.be.equal('songs');
+    expect(bucket.bucketName).to.be.equal('lyrics');
 
     expect(bucket.collection).to.exist;
     expect(bucket.collectionName).to.exist;
-    expect(bucket.collectionName).to.be.equal('songs.files');
+    expect(bucket.collectionName).to.be.equal('lyrics.files');
   });
+
 
   // writers
   it('should write to default bucket', (done) => {
@@ -102,7 +103,7 @@ describe.only('mongoose gridfs', () => {
     });
   });
 
-  it('should write to custome bucket', (done) => {
+  it('should write to custom bucket', (done) => {
     const bucket = createBucket({ bucketName: 'lyrics' });
     expect(bucket.collection).to.exist;
     expect(bucket.collectionName).to.exist;
@@ -142,16 +143,10 @@ describe.only('mongoose gridfs', () => {
     expect(writestream).to.exist;
     expect(isStream(writestream)).to.be.true;
 
-    // handle errors
-    writestream.on('error', function (error) {
-      return done(error);
-    });
-
-    // finalize write
-    writestream.on('finish', function (file) {
-      return done(null, file);
-    });
+    writestream.on('error', error => done(error));
+    writestream.on('finish', file => done(null, file));
   });
+
 
   // readers
   it('should read file content to `Buffer` by _id', (done) => {
