@@ -42,7 +42,9 @@
   "devDependencies": {
     "@lykmapipo/mongoose-test-helpers": ">=0.2.4",
     "async": ">=2.6.1",
+    "body-parser": "^1.18.3",
     "chai": "^4.2.0",
+    "express": "^4.16.4",
     "grunt": "^1.0.3",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-watch": "^1.1.0",
@@ -52,7 +54,8 @@
     "load-grunt-tasks": "^4.0.0",
     "mime": "^2.4.0",
     "mocha": "^5.2.0",
-    "mongoose": ">=5.4.2"
+    "mongoose": ">=5.4.2",
+    "multer": "^1.4.1"
   },
   "engines": {
     "node": ">=8.6.0",
