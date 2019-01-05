@@ -49,6 +49,7 @@ describe.only('mongoose gridfs', () => {
     expect(DEFAULT_BUCKET_CHUNK_SIZE).to.equal(255 * 1024);
     expect(DEFAULT_BUCKET_OPTIONS).to.exist;
     expect(DEFAULT_BUCKET_OPTIONS).to.be.eql({
+      modelName: 'File',
       bucketName: 'fs',
       chunkSizeBytes: 255 * 1024
     });

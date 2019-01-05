@@ -32,7 +32,7 @@
     "url": "https://github.com/lykmapipo/mongoose-gridfs/issues"
   },
   "dependencies": {
-    "@lykmapipo/mongoose-common": ">=0.6.0",
+    "@lykmapipo/mongoose-common": ">=0.8.0",
     "lodash": ">=4.17.11",
     "stream-read": ">=1.1.2"
   },
