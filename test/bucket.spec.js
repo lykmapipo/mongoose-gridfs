@@ -15,7 +15,7 @@ const {
   DEFAULT_BUCKET_OPTIONS,
   createBucket,
   GridFSBucket
-} = require(path.join(__dirname, '..', 'lib', 'bucket'));
+} = require(path.join(__dirname, '..'));
 
 
 describe('mongoose gridfs', () => {

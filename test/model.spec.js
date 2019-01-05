@@ -9,7 +9,7 @@ const isStream = require('is-stream');
 const { expect } = require('chai');
 const {
   createModel
-} = require(path.join(__dirname, '..', 'lib', 'bucket'));
+} = require(path.join(__dirname, '..'));
 
 describe('gridfs model', () => {
 

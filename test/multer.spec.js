@@ -9,7 +9,7 @@ const onFinished = require('on-finished');
 const UploadForm = require('form-data');
 const multer = require('multer');
 const { expect } = require('chai');
-const { createBucket } = require(path.join(__dirname, '..', 'lib', 'bucket'));
+const { createBucket } = require(path.join(__dirname, '..'));
 
 
 /* helpers: https://github.com/expressjs/multer/blob/master/test/_util.js */
