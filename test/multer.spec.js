@@ -37,7 +37,7 @@ const submitForm = (multer, form, cb) => {
 };
 
 /* specs: https://github.com/expressjs/multer/blob/master/test/disk-storage.js */
-describe.only('multer storage', () => {
+describe('multer storage', () => {
 
   it('should process parser/form-data POST request', (done) => {
     const storage = createBucket();

@@ -18,7 +18,7 @@ const {
 } = require(path.join(__dirname, '..', 'lib', 'bucket'));
 
 
-describe.only('mongoose gridfs', () => {
+describe('mongoose gridfs', () => {
   // collect file ids
   const ids = [];
 
