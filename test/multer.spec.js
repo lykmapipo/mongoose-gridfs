@@ -13,10 +13,9 @@ const { createBucket } = require(path.join(__dirname, '..', 'lib', 'bucket'));
 
 
 /* helpers: https://github.com/expressjs/multer/blob/master/test/_util.js */
-const file = name => fs.createReadStream(path.join(__dirname, 'fixtures', name));
-
-const fileSize = name => fs.statSync(path.join(__dirname, 'fixtures', name)).size;
-
+const fixture = name => path.join(__dirname, 'fixtures', name);
+const file = name => fs.createReadStream(fixture(name));
+const fileSize = name => fs.statSync(fixture(name)).size;
 const submitForm = (multer, form, cb) => {
   form.getLength((error, length) => {
     if (error) { return cb(error); }
