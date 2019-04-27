@@ -4,7 +4,8 @@
   "description": "mongoose gridfs on top of gridfs-stream",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
     "async": ">=2.6.2",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
+    "doxdox": "^3.0.0",
     "express": "^4.16.4",
     "form-data": "^2.3.3",
     "grunt": "^1.0.4",
