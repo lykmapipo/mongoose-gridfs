@@ -17,7 +17,10 @@ $ npm install --save mongoose-gridfs
 const { createReadStream } = require('fs');
 const { createModel } = require('mongoose-gridfs');
 
-// use custom bucket with custom options
+// use default bucket
+const Attachment = createModel();
+
+// or create custom bucket with custom options
 const Attachment = createModel({
     modelName: 'Attachment',
     connection: connection
@@ -30,7 +33,7 @@ Attachment.write(options, readStream, (error, file) => {
   //=> {_id: ..., filename: ..., ...}
 });
 
-// read  larger file
+// read larger file
 const readStream = Attachment.readById(objectid);
 
 // read smaller file
@@ -40,7 +43,9 @@ Attachment.readById(objectid, (error, buffer) => { ... });
 Attachment.unlinkById(objectid, (error) => { ... });
 ```
 
+
 **[Read Documentation](DOCUMENTATION.md)**
+
 
 ## Literature Reviewed
 - [MongoDB GridFS](https://docs.mongodb.org/manual/core/gridfs/)
