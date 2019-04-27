@@ -9,39 +9,34 @@ mongoose [gridfs](https://docs.mongodb.com/manual/core/gridfs/) on top of [new g
 
 ## Installation
 ```sh
-$ npm install --save mongoose mongoose-gridfs
+$ npm install --save mongoose-gridfs
 ```
 
 ## Usage
 ```js
-// dependencies
-const fs = require('fs');
-const mongoose = require('mongoose');
-const gridfs = require('mongoose-gridfs');
+const { createReadStream } = require('fs');
+const { createModel } = require('mongoose-gridfs');
 
-// ensure mongoose connect
-mongoose.connect('mongodb://localhost/test');
-
-// instantiate mongoose-gridfs
-const { model: Attachment } = gridfs({
-  collection: 'attachments',
-  model: 'Attachment',
-  mongooseConnection: mongoose.connection
+// use custom bucket with custom options
+const Attachment = createModel({
+    modelName: 'Attachment',
+    connection: connection
 });
 
-// create or save a file to gridfs
-const readStream = fs.createReadStream('/some/path/sample.txt');
+// write file to gridfs
+const readStream = createReadStream('sample.txt');
 const options = ({ filename: 'sample.txt', contentType: 'text/plain' });
-Attachment.write(options, readStream, (error, file) => { ... });
+Attachment.write(options, readStream, (error, file) => {
+  //=> {_id: ..., filename: ..., ...}
+});
 
-
-// for larger file size, read a file and receive a readable stream
+// read  larger file
 const readStream = Attachment.readById(objectid);
 
-// for smaller file size, read a file and receive a buffer
+// read smaller file
 Attachment.readById(objectid, (error, buffer) => { ... });
 
-// remove file details and its content from gridfs
+// remove file and its content
 Attachment.unlinkById(objectid, (error) => { ... });
 ```
 
