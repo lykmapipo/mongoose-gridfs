@@ -3,7 +3,7 @@ services: mongodb
 addons:
   apt:
     sources:
-    - mongodb-3.4-precise
+    - mongodb-4.0-xenial
     packages:
     - mongodb-org-server
 node_js:
