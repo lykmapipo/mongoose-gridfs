@@ -1,3 +1,11 @@
+#### 1.0.1 (2019-05-01)
+
+##### Chores
+
+* **ci:**  force latest nodejs ([a00e135d](https://github.com/lykmapipo/mongoose-gridfs/commit/a00e135dda16c519e45733111bd60adbad0d5a5c))
+* **.npmrc:**  prevent npm version to commit and tag version ([f159d18b](https://github.com/lykmapipo/mongoose-gridfs/commit/f159d18b22b65eabae784a26b6301a42d99c519b))
+* **deps:**  force latest version & audit fix ([2c23c325](https://github.com/lykmapipo/mongoose-gridfs/commit/2c23c3253bf04a42e41c5b5c8d9ee290862b44c8))
+
 #### 1.0.0 (2019-04-27)
 
 ##### Chores
