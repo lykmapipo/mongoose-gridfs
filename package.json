@@ -1,6 +1,6 @@
 {
   "name": "mongoose-gridfs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "mongoose gridfs on top of gridfs-stream",
   "main": "index.js",
   "scripts": {
@@ -33,20 +33,20 @@
     "url": "https://github.com/lykmapipo/mongoose-gridfs/issues"
   },
   "dependencies": {
-    "@lykmapipo/mongoose-common": ">=0.23.0",
+    "@lykmapipo/mongoose-common": ">=0.23.1",
     "lodash": ">=4.17.11",
     "stream-read": ">=1.1.2"
   },
   "peerDependencies": {
-    "mongoose": ">=5.5.7"
+    "mongoose": ">=5.5.9"
   },
   "devDependencies": {
-    "@lykmapipo/mongoose-test-helpers": ">=0.7.2",
-    "async": ">=2.6.2",
+    "@lykmapipo/mongoose-test-helpers": ">=0.7.3",
+    "async": ">=3.0.0",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "doxdox": "^3.0.0",
-    "express": "^4.16.4",
+    "express": "^4.17.0",
     "form-data": "^2.3.3",
     "grunt": "^1.0.4",
     "grunt-contrib-jshint": "^2.1.0",
@@ -55,9 +55,9 @@
     "is-stream": "^2.0.0",
     "jshint-stylish": "^2.2.1",
     "load-grunt-tasks": "^4.0.0",
-    "mime": "^2.4.2",
+    "mime": "^2.4.3",
     "mocha": "^6.1.4",
-    "mongoose": ">=5.5.7",
+    "mongoose": ">=5.5.9",
     "multer": "^1.4.1",
     "on-finished": "^2.3.0"
   },
