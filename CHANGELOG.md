@@ -1,3 +1,17 @@
+#### 1.0.5 (2019-05-25)
+
+##### Documentation Changes
+
+*  remove year on license and fix typos ([a79882eb](https://github.com/lykmapipo/mongoose-gridfs/commit/a79882ebd9809629ce7510bd1e02171d142b9b32))
+
+##### Refactors
+
+* **schema:**  rename createSchema to createFileSchema ([88e74fcd](https://github.com/lykmapipo/mongoose-gridfs/commit/88e74fcd741e68dbcc22467d4b8c0a5a944ec0ac))
+
+##### Tests
+
+*  removing underscores on variables ([bae3e7ed](https://github.com/lykmapipo/mongoose-gridfs/commit/bae3e7ed188522da1d8ce2931a08686c0ea1b444))
+
 #### 1.0.4 (2019-05-25)
 
 ##### Chores
