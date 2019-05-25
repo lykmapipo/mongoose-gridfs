@@ -40,7 +40,7 @@ const readStream = Attachment.readById(objectid);
 Attachment.readById(objectid, (error, buffer) => { ... });
 
 // remove file and its content
-Attachment.unlinkById(objectid, (error) => { ... });
+Attachment.unlink(objectid, (error) => { ... });
 ```
 
 
