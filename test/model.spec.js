@@ -36,7 +36,7 @@ describe('gridfs model', () => {
 
   describe('instance', () => {
 
-    it('should write file to default bucket', (done) => {
+    it('should write file to default bucket', done => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -47,22 +47,22 @@ describe('gridfs model', () => {
       const File = createModel();
       const file = new File(options);
 
-      file.write(readableStream, (error, _file) => {
+      file.write(readableStream, (error, created) => {
         expect(error).to.not.exist;
-        expect(_file).to.exist;
-        expect(_file._id).to.exist;
-        expect(_file.filename).to.exist;
-        expect(_file.contentType).to.exist;
-        expect(_file.length).to.exist;
-        expect(_file.chunkSize).to.exist;
-        expect(_file.uploadDate).to.exist;
-        expect(_file.md5).to.exist;
-        ids.push(_file._id);
-        done(error, _file);
+        expect(created).to.exist;
+        expect(created._id).to.exist;
+        expect(created.filename).to.exist;
+        expect(created.contentType).to.exist;
+        expect(created.length).to.exist;
+        expect(created.chunkSize).to.exist;
+        expect(created.uploadDate).to.exist;
+        expect(created.md5).to.exist;
+        ids.push(created._id);
+        done(error, created);
       });
     });
 
-    it('should write file to custom bucket', (done) => {
+    it('should write file to custom bucket', done => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -73,21 +73,21 @@ describe('gridfs model', () => {
       const Photo = createModel({ modelName: 'Photo' });
       const photo = new Photo(options);
 
-      photo.write(readableStream, (error, _photo) => {
+      photo.write(readableStream, (error, created) => {
         expect(error).to.not.exist;
-        expect(_photo).to.exist;
-        expect(_photo._id).to.exist;
-        expect(_photo.filename).to.exist;
-        expect(_photo.contentType).to.exist;
-        expect(_photo.length).to.exist;
-        expect(_photo.chunkSize).to.exist;
-        expect(_photo.uploadDate).to.exist;
-        expect(_photo.md5).to.exist;
-        done(error, _photo);
+        expect(created).to.exist;
+        expect(created._id).to.exist;
+        expect(created.filename).to.exist;
+        expect(created.contentType).to.exist;
+        expect(created.length).to.exist;
+        expect(created.chunkSize).to.exist;
+        expect(created.uploadDate).to.exist;
+        expect(created.md5).to.exist;
+        done(error, created);
       });
     });
 
-    it('should read file content to `Buffer`', (done) => {
+    it('should read file content to `Buffer`', done => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
@@ -104,7 +104,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should return a readable stream if not callback', (done) => {
+    it('should return a readable stream if not callback', done => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
@@ -118,23 +118,23 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should unlink a file', (done) => {
+    it('should unlink a file', done => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
         if (file) {
-          file.unlink((error, _file) => {
+          file.unlink((error, unlinked) => {
             expect(error).to.not.exist;
-            expect(_file).to.exist;
-            expect(_file._id).to.exist;
-            expect(_file.filename).to.exist;
-            expect(_file.contentType).to.exist;
-            expect(_file.length).to.exist;
-            expect(_file.chunkSize).to.exist;
-            expect(_file.uploadDate).to.exist;
-            expect(_file.md5).to.exist;
+            expect(unlinked).to.exist;
+            expect(unlinked._id).to.exist;
+            expect(unlinked.filename).to.exist;
+            expect(unlinked.contentType).to.exist;
+            expect(unlinked.length).to.exist;
+            expect(unlinked.chunkSize).to.exist;
+            expect(unlinked.uploadDate).to.exist;
+            expect(unlinked.md5).to.exist;
             ids = _.tail(ids);
-            done(error, _file);
+            done(error, unlinked);
           });
         } else {
           done(error, file);
@@ -148,7 +148,7 @@ describe('gridfs model', () => {
   // static
   describe('static', () => {
 
-    it('should write file to default bucket', (done) => {
+    it('should write file to default bucket', done => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -158,22 +158,22 @@ describe('gridfs model', () => {
 
       const File = createModel();
 
-      File.write(options, readableStream, (error, _file) => {
+      File.write(options, readableStream, (error, created) => {
         expect(error).to.not.exist;
-        expect(_file).to.exist;
-        expect(_file._id).to.exist;
-        expect(_file.filename).to.exist;
-        expect(_file.contentType).to.exist;
-        expect(_file.length).to.exist;
-        expect(_file.chunkSize).to.exist;
-        expect(_file.uploadDate).to.exist;
-        expect(_file.md5).to.exist;
-        ids.push(_file._id);
-        done(error, _file);
+        expect(created).to.exist;
+        expect(created._id).to.exist;
+        expect(created.filename).to.exist;
+        expect(created.contentType).to.exist;
+        expect(created.length).to.exist;
+        expect(created.chunkSize).to.exist;
+        expect(created.uploadDate).to.exist;
+        expect(created.md5).to.exist;
+        ids.push(created._id);
+        done(error, created);
       });
     });
 
-    it('should write file to custom bucket', (done) => {
+    it('should write file to custom bucket', done => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -183,21 +183,21 @@ describe('gridfs model', () => {
 
       const Photo = createModel({ modelName: 'Photo' });
 
-      Photo.write(options, readableStream, (error, _photo) => {
+      Photo.write(options, readableStream, (error, created) => {
         expect(error).to.not.exist;
-        expect(_photo).to.exist;
-        expect(_photo._id).to.exist;
-        expect(_photo.filename).to.exist;
-        expect(_photo.contentType).to.exist;
-        expect(_photo.length).to.exist;
-        expect(_photo.chunkSize).to.exist;
-        expect(_photo.uploadDate).to.exist;
-        expect(_photo.md5).to.exist;
-        done(error, _photo);
+        expect(created).to.exist;
+        expect(created._id).to.exist;
+        expect(created.filename).to.exist;
+        expect(created.contentType).to.exist;
+        expect(created.length).to.exist;
+        expect(created.chunkSize).to.exist;
+        expect(created.uploadDate).to.exist;
+        expect(created.md5).to.exist;
+        done(error, created);
       });
     });
 
-    it('should read file content to `Buffer`', (done) => {
+    it('should read file content to `Buffer`', done => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.read(options, (error, content) => {
@@ -208,7 +208,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should return a readable stream if no callback', (done) => {
+    it('should return a readable stream if no callback', done => {
       const File = createModel();
       const options = { _id: ids[0] };
       const readstream = File.read(options);
@@ -216,21 +216,21 @@ describe('gridfs model', () => {
       done();
     });
 
-    it('should unlink a file', (done) => {
+    it('should unlink a file', done => {
       const File = createModel();
       const options = { _id: ids[0] };
-      File.unlink(options, (error, _file) => {
+      File.unlink(options, (error, unlinked) => {
         expect(error).to.not.exist;
-        expect(_file).to.exist;
-        expect(_file._id).to.exist;
-        expect(_file.filename).to.exist;
-        expect(_file.contentType).to.exist;
-        expect(_file.length).to.exist;
-        expect(_file.chunkSize).to.exist;
-        expect(_file.uploadDate).to.exist;
-        expect(_file.md5).to.exist;
+        expect(unlinked).to.exist;
+        expect(unlinked._id).to.exist;
+        expect(unlinked.filename).to.exist;
+        expect(unlinked.contentType).to.exist;
+        expect(unlinked.length).to.exist;
+        expect(unlinked.chunkSize).to.exist;
+        expect(unlinked.uploadDate).to.exist;
+        expect(unlinked.md5).to.exist;
         ids = _.tail(ids);
-        done(error, _file);
+        done(error, unlinked);
       });
     });
 
