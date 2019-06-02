@@ -8,9 +8,7 @@ const actions = require('mongoose-rest-actions');
 const mime = require('mime');
 const isStream = require('is-stream');
 const {
-  expect,
-  enableDebug,
-  disableDebug
+  expect
 } = require('@lykmapipo/mongoose-test-helpers');
 const {
   createModel
@@ -285,7 +283,6 @@ describe('gridfs model', () => {
     });
 
     it('should list files with get', done => {
-      enableDebug();
       Archive.get((error, results) => {
         expect(error).to.not.exist;
         expect(results).to.exist;
@@ -303,9 +300,8 @@ describe('gridfs model', () => {
         expect(results.pages).to.be.at.least(1);
         expect(results.lastModified).to.exist;
         expect(results.hasMore).to.exist;
-        expect(_.maxBy(results.data, 'uploadDate').uploadDate)
+        expect(_.maxBy(results.data, 'createdAt').createdAt)
           .to.be.at.most(results.lastModified);
-        disableDebug();
         done(error, results);
       });
     });
