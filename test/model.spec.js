@@ -257,6 +257,7 @@ describe('gridfs model', () => {
 
   describe('plugins', () => {
     let Archive;
+    let archive;
 
     before(done => {
       const filename = 'text.txt';
@@ -278,12 +279,38 @@ describe('gridfs model', () => {
         expect(created.chunkSize).to.exist;
         expect(created.uploadDate).to.exist;
         expect(created.md5).to.exist;
+        archive = created;
         done(error, created);
       });
     });
 
     it('should list files with get', done => {
       Archive.get((error, results) => {
+        expect(error).to.not.exist;
+        expect(results).to.exist;
+        expect(results.data).to.exist;
+        expect(results.data).to.have.length.at.least(1);
+        expect(results.total).to.exist;
+        expect(results.total).to.be.at.least(1);
+        expect(results.limit).to.exist;
+        expect(results.limit).to.be.equal(10);
+        expect(results.skip).to.exist;
+        expect(results.skip).to.be.equal(0);
+        expect(results.page).to.exist;
+        expect(results.page).to.be.equal(1);
+        expect(results.pages).to.exist;
+        expect(results.pages).to.be.at.least(1);
+        expect(results.lastModified).to.exist;
+        expect(results.hasMore).to.exist;
+        expect(_.maxBy(results.data, 'createdAt').createdAt)
+          .to.be.at.most(results.lastModified);
+        done(error, results);
+      });
+    });
+
+    it('should search files with get', done => {
+      const options = { filter: { q: archive.filename } };
+      Archive.get(options, (error, results) => {
         expect(error).to.not.exist;
         expect(results).to.exist;
         expect(results.data).to.exist;
