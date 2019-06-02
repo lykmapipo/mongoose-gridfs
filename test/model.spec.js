@@ -23,6 +23,8 @@ describe('gridfs model', () => {
     expect(File.schema).to.exist;
     expect(File.modelName).to.be.equal('File');
     expect(File.collection.name).to.be.equal('fs.files');
+    expect(File.CREATED_AT_FIELD).to.be.equal('uploadDate');
+    expect(File.UPDATED_AT_FIELD).to.be.equal('uploadDate');
   });
 
   it('should create custom gridfs model', () => {
@@ -32,6 +34,20 @@ describe('gridfs model', () => {
     expect(Photo.schema).to.exist;
     expect(Photo.modelName).to.be.equal('Photo');
     expect(Photo.collection.name).to.be.equal('photos.files');
+    expect(Photo.CREATED_AT_FIELD).to.be.equal('uploadDate');
+    expect(Photo.UPDATED_AT_FIELD).to.be.equal('uploadDate');
+  });
+
+  it('should create gridfs model with plugins', () => {
+    const Image = createModel({ modelName: 'Image' }, (schema) => {
+      schema.statics.stats = (optns, done) => done(null, optns);
+    });
+
+    expect(Image).to.exist;
+    expect(Image.schema).to.exist;
+    expect(Image.modelName).to.be.equal('Image');
+    expect(Image.collection.name).to.be.equal('images.files');
+    expect(Image.stats).to.exist.and.be.a('function');
   });
 
   describe('instance', () => {
