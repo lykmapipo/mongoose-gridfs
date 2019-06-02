@@ -1,6 +1,3 @@
-### GridFS API
-
-
 #### GridFSBucket.createWriteStream(optns) 
 
 Creates a writable stream (GridFSBucketWriteStream) for writing buffers to GridFS for a custom file id. The stream's 'id' property contains
@@ -401,7 +398,7 @@ const bucket = createBucket({ buketName, connection });
 
 
 
-#### createModel([optns]) 
+#### createModel([optns, plugins]) 
 
 Create GridFSBucket files collection model
 
@@ -419,6 +416,7 @@ Create GridFSBucket files collection model
 | optns.chunkSizeBytes&#x3D;255 | `Number`  | * 1024] Number of bytes stored in each chunk. Defaults to 255KB | *Optional* |
 | optns.writeConcern | `Object`  | Optional write concern to be passed to write operations, for instance `{ w: 1 }` | *Optional* |
 | optns.readPreference | `Object`  | Optional read preference to be passed to read operations | *Optional* |
+| plugins | `Function`  | list of valid mongoose plugin to apply to file schema | *Optional* |
 
 
 
@@ -441,7 +439,23 @@ const Photo = createModel({ modelName, connection }); // => photos.files
 
 
 
-### Model API
+### lib/schema.js
+
+
+#### createFileSchema()  *private method*
+
+Create mongoose schema compactible with gridfs files collection.
+
+
+
+
+
+
+##### Returns
+
+
+- `Schema`  valid mongoose schema to access specific gridfs files collection.
+
 
 
 #### FileSchema.methods.write(stream[, done]) 

@@ -1,3 +1,16 @@
+#### 1.1.0 (2019-06-02)
+
+##### New Features
+
+*  add timestamps virtuals and expose on toJSON and toObject ([7e58c150](https://github.com/lykmapipo/mongoose-gridfs/commit/7e58c150d8b3f26304978e7ec6c6b0a4568fec04))
+*  allow plugins on createModel ([95cec963](https://github.com/lykmapipo/mongoose-gridfs/commit/95cec96351c750163b5afaeee59b3b9799270a70))
+
+##### Tests
+
+*  implement metadata getById, put, patch for rest actions ([0bf51e7c](https://github.com/lykmapipo/mongoose-gridfs/commit/0bf51e7c43c387fd4f832a7bfca294345000125d))
+*  implement search rest actions test ([d3321ad7](https://github.com/lykmapipo/mongoose-gridfs/commit/d3321ad7af5c204fb879563a6347fbe4c4c9b7bd))
+*  implement rest actions tests ([08b436f3](https://github.com/lykmapipo/mongoose-gridfs/commit/08b436f3296048723409a288ac49b0292f5c03b1))
+
 #### 1.0.7 (2019-06-02)
 
 ##### Chores
