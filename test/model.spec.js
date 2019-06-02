@@ -4,9 +4,14 @@
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
+const actions = require('mongoose-rest-actions');
 const mime = require('mime');
 const isStream = require('is-stream');
-const { expect } = require('chai');
+const {
+  expect,
+  enableDebug,
+  disableDebug
+} = require('@lykmapipo/mongoose-test-helpers');
 const {
   createModel
 } = require(path.join(__dirname, '..'));
@@ -247,6 +252,61 @@ describe('gridfs model', () => {
         expect(unlinked.md5).to.exist;
         ids = _.tail(ids);
         done(error, unlinked);
+      });
+    });
+
+  });
+
+  describe('plugins', () => {
+    let Archive;
+
+    before(done => {
+      const filename = 'text.txt';
+      const contentType = mime.getType('.txt');
+      const options = { filename, contentType };
+
+      const fromFile = path.join(__dirname, 'fixtures', 'text.txt');
+      const readableStream = fs.createReadStream(fromFile);
+
+      Archive = createModel({ modelName: 'Archive' }, actions);
+
+      Archive.write(options, readableStream, (error, created) => {
+        expect(error).to.not.exist;
+        expect(created).to.exist;
+        expect(created._id).to.exist;
+        expect(created.filename).to.exist;
+        expect(created.contentType).to.exist;
+        expect(created.length).to.exist;
+        expect(created.chunkSize).to.exist;
+        expect(created.uploadDate).to.exist;
+        expect(created.md5).to.exist;
+        done(error, created);
+      });
+    });
+
+    it('should list files with get', done => {
+      enableDebug();
+      Archive.get((error, results) => {
+        expect(error).to.not.exist;
+        expect(results).to.exist;
+        expect(results.data).to.exist;
+        expect(results.data).to.have.length.at.least(1);
+        expect(results.total).to.exist;
+        expect(results.total).to.be.at.least(1);
+        expect(results.limit).to.exist;
+        expect(results.limit).to.be.equal(10);
+        expect(results.skip).to.exist;
+        expect(results.skip).to.be.equal(0);
+        expect(results.page).to.exist;
+        expect(results.page).to.be.equal(1);
+        expect(results.pages).to.exist;
+        expect(results.pages).to.be.at.least(1);
+        expect(results.lastModified).to.exist;
+        expect(results.hasMore).to.exist;
+        expect(_.maxBy(results.data, 'uploadDate').uploadDate)
+          .to.be.at.most(results.lastModified);
+        disableDebug();
+        done(error, results);
       });
     });
 
