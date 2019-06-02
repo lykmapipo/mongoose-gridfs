@@ -333,6 +333,55 @@ describe('gridfs model', () => {
       });
     });
 
+    it('should get single file with getById', done => {
+      Archive.getById(archive._id, (error, found) => {
+        expect(error).to.not.exist;
+        expect(found).to.exist;
+        expect(found._id).to.exist;
+        expect(found.filename).to.exist;
+        expect(found.contentType).to.exist;
+        expect(found.length).to.exist;
+        expect(found.chunkSize).to.exist;
+        expect(found.uploadDate).to.exist;
+        expect(found.md5).to.exist;
+        done(error, found);
+      });
+    });
+
+    it('should update existing file metadata with patch', done => {
+      const updates = { aliases: ['lime', 'senior'] };
+      Archive.patch(archive._id, updates, (error, updated) => {
+        expect(error).to.not.exist;
+        expect(updated).to.exist;
+        expect(updated._id).to.exist;
+        expect(updated.filename).to.exist;
+        expect(updated.contentType).to.exist;
+        expect(updated.length).to.exist;
+        expect(updated.chunkSize).to.exist;
+        expect(updated.uploadDate).to.exist;
+        expect(updated.md5).to.exist;
+        expect(updated.aliases).to.exist.and.be.eql(updates.aliases);
+        done(error, updated);
+      });
+    });
+
+    it('should update existing file metadata with put', done => {
+      const updates = { aliases: ['lime', 'senior'] };
+      Archive.put(archive._id, updates, (error, updated) => {
+        expect(error).to.not.exist;
+        expect(updated).to.exist;
+        expect(updated._id).to.exist;
+        expect(updated.filename).to.exist;
+        expect(updated.contentType).to.exist;
+        expect(updated.length).to.exist;
+        expect(updated.chunkSize).to.exist;
+        expect(updated.uploadDate).to.exist;
+        expect(updated.md5).to.exist;
+        expect(updated.aliases).to.exist.and.be.eql(updates.aliases);
+        done(error, updated);
+      });
+    });
+
   });
 
 });
