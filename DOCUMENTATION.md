@@ -439,25 +439,6 @@ const Photo = createModel({ modelName, connection }); // => photos.files
 
 
 
-### lib/schema.js
-
-
-#### createFileSchema()  *private method*
-
-Create mongoose schema compactible with gridfs files collection.
-
-
-
-
-
-
-##### Returns
-
-
-- `Schema`  valid mongoose schema to access specific gridfs files collection.
-
-
-
 #### FileSchema.methods.write(stream[, done]) 
 
 Write provided file into MongoDB GridFS
