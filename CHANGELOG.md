@@ -1,3 +1,9 @@
+#### 1.2.0 (2019-06-04)
+
+##### New Features
+
+*  disable id in file schema ([3b86ce5a](https://github.com/lykmapipo/mongoose-gridfs/commit/3b86ce5a95aaca58865fa5cc2d6ba0b834d96e8f))
+
 #### 1.1.1 (2019-06-04)
 
 ##### Chores
