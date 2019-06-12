@@ -59,7 +59,7 @@
     "mime": "^2.4.4",
     "mocha": "^6.1.4",
     "mongoose": ">=5.5.14",
-    "mongoose-rest-actions": "^0.28.3",
+    "mongoose-rest-actions": "^0.28.4",
     "multer": "^1.4.1",
     "on-finished": "^2.3.0"
   },
