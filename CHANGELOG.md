@@ -1,3 +1,13 @@
+#### 1.2.2 (2019-06-12)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([f1f2b516](https://github.com/lykmapipo/mongoose-gridfs/commit/f1f2b51654a6333d4b24ef4e96b1a36fd7203ebd))
+
+##### Refactors
+
+* **bucket:**  remove exist connection check to allow lazy connections ([8e1ed2ff](https://github.com/lykmapipo/mongoose-gridfs/commit/8e1ed2ffee5e10041de6a2d4dd12430626174556))
+
 #### 1.2.1 (2019-06-09)
 
 ##### Chores
