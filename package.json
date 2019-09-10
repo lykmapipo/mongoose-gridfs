@@ -38,7 +38,7 @@
     "stream-read": ">=1.1.2"
   },
   "peerDependencies": {
-    "mongoose": ">=5.6.9"
+    "mongoose": ">=5.7.0"
   },
   "devDependencies": {
     "@lykmapipo/mongoose-test-helpers": ">=0.7.17",
@@ -58,7 +58,7 @@
     "load-grunt-tasks": "^5.1.0",
     "mime": "^2.4.4",
     "mocha": "^6.2.0",
-    "mongoose": ">=5.6.9",
+    "mongoose": ">=5.7.0",
     "mongoose-rest-actions": "^0.28.6",
     "multer": "^1.4.2",
     "on-finished": "^2.3.0",
