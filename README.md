@@ -6,6 +6,7 @@ mongoose-gridfs
 mongoose [gridfs](https://docs.mongodb.com/manual/core/gridfs/) on top of [new gridfs api](http://mongodb.github.io/node-mongodb-native/3.1/tutorials/gridfs/)
 
 *Note!: Only compatible with Mongoose >= 5.7.0*
+
 *Note!: Ensure mongoose connection before use*
 
 ## Installation
@@ -35,13 +36,13 @@ Attachment.write(options, readStream, (error, file) => {
 });
 
 // read larger file
-const readStream = Attachment.readById(objectid);
+const readStream = Attachment.read({ _id });
 
 // read smaller file
-Attachment.readById(objectid, (error, buffer) => { ... });
+Attachment.read({ _id }, (error, buffer) => { ... });
 
 // remove file and its content
-Attachment.unlink(objectid, (error) => { ... });
+Attachment.unlink({ _id }, (error) => { ... });
 ```
 
 
