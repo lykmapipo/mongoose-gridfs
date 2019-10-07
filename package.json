@@ -4,7 +4,7 @@
   "description": "mongoose gridfs on top of gridfs-stream",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test",
+    "test": "NODE_ENV=test grunt test",
     "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md"
   },
   "repository": {
