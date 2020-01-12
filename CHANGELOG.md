@@ -1,3 +1,9 @@
+#### 1.2.15 (2020-01-12)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([a8da3eea](https://github.com/lykmapipo/mongoose-gridfs/commit/a8da3eea2799fd25c7554af7ee3b271b8be71190))
+
 #### 1.2.14 (2019-11-14)
 
 ##### Chores
