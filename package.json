@@ -1,6 +1,6 @@
 {
   "name": "mongoose-gridfs",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "mongoose gridfs on top of gridfs-stream",
   "main": "index.js",
   "scripts": {
