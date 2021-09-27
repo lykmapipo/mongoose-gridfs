@@ -5,9 +5,16 @@ mongoose-gridfs
 
 mongoose [gridfs](https://docs.mongodb.com/manual/core/gridfs/) on top of [new gridfs api](http://mongodb.github.io/node-mongodb-native/3.1/tutorials/gridfs/)
 
-*Note!: Only compatible with Mongoose >= 5.7.0*
+*Note!: Only compatible with Mongoose >= 6.0.7+*
 
 *Note!: Ensure mongoose connection before use*
+
+## Requirements
+
+- [NodeJS v13+](https://nodejs.org)
+- [Npm v6.12+](https://www.npmjs.com/)
+- [MongoDB v4+](https://www.mongodb.com/)
+- [Mongoose v6+](https://github.com/Automattic/mongoose)
 
 ## Installation
 ```sh
