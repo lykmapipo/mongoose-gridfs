@@ -1,3 +1,23 @@
+#### 1.3.0 (2021-09-27)
+
+##### Chores
+
+* **release:**  compile latest source ([d0883a73](https://github.com/lykmapipo/mongoose-gridfs/commit/d0883a73f3df4344f00ed444935f48629a946a92))
+* **deps:**
+  *  sync remote updates ([9fcb0d2e](https://github.com/lykmapipo/mongoose-gridfs/commit/9fcb0d2e69bcd714de5dfbc9358f462c0227394a))
+  *  bump bl from 2.2.0 to 2.2.1 ([1bbcc1b9](https://github.com/lykmapipo/mongoose-gridfs/commit/1bbcc1b9aae1b3563a54e539cc859236a333248c))
+  *  bump dot-prop from 4.2.0 to 4.2.1 ([f829bc67](https://github.com/lykmapipo/mongoose-gridfs/commit/f829bc678d225c2404c504386acaf660240b9ddf))
+  *  bump ini from 1.3.5 to 1.3.7 ([e988db60](https://github.com/lykmapipo/mongoose-gridfs/commit/e988db608f95cd4b9f70698bbf62adf7f044af7c))
+  *  bump websocket-extensions from 0.1.3 to 0.1.4 ([2a30941a](https://github.com/lykmapipo/mongoose-gridfs/commit/2a30941adbd631436793ee115102c12c0b4356c7))
+
+##### Other Changes
+
+*  migrate to mongoose v6 ([9a46d49e](https://github.com/lykmapipo/mongoose-gridfs/commit/9a46d49e31067937d7b9ad3a64307289dc80911a))
+
+##### Refactors
+
+*  migrate to es6 ([d67f44e3](https://github.com/lykmapipo/mongoose-gridfs/commit/d67f44e3294132bc75de257711b85d9f556960fc))
+
 #### 1.2.48 (2020-08-08)
 
 ##### Chores
