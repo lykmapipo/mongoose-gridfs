@@ -1,44 +1,42 @@
-'use strict';
-
-
-/* dependencies */
-const fs = require('fs');
-const path = require('path');
-const stream = require('stream');
-const onFinished = require('on-finished');
-const UploadForm = require('form-data');
-const multer = require('multer');
-const { expect } = require('chai');
-const { createBucket } = require(path.join(__dirname, '..'));
-
+import fs from 'fs';
+import path from 'path';
+import stream from 'stream';
+import onFinished from 'on-finished';
+import UploadForm from 'form-data';
+import multer from 'multer';
+import { expect } from 'chai';
+import { createBucket } from '../src';
 
 /* helpers: https://github.com/expressjs/multer/blob/master/test/_util.js */
-const fixture = name => path.join(__dirname, 'fixtures', name);
-const file = name => fs.createReadStream(fixture(name));
-const fileSize = name => fs.statSync(fixture(name)).size;
-const submitForm = (multer, form, cb) => {
-  form.getLength((error, length) => {
-    if (error) { return cb(error); }
+const fixture = (name) => path.join(__dirname, 'fixtures', name);
+const file = (name) => fs.createReadStream(fixture(name));
+const fileSize = (name) => fs.statSync(fixture(name)).size;
+const submitForm = ($multer, form, cb) => {
+  return form.getLength((error, length) => {
+    if (error) {
+      cb(error);
+    }
 
     const req = new stream.PassThrough();
 
     req.complete = false;
-    form.once('end', () => req.complete = true);
+    form.once('end', () => {
+      req.complete = true;
+    });
     form.pipe(req);
     req.headers = {
-      'content-type': 'multipart/form-data; boundary=' + form.getBoundary(),
-      'content-length': length
+      'content-type': `multipart/form-data; boundary=${form.getBoundary()}`,
+      'content-length': length,
     };
 
-    multer(req, null, (error) => {
-      onFinished(req, () => cb(error, req));
+    $multer(req, null, ($error) => {
+      onFinished(req, () => cb($error, req));
     });
   });
 };
 
 /* specs: https://github.com/expressjs/multer/blob/master/test/disk-storage.js */
 describe('multer storage', () => {
-
   it('should process parser/form-data POST request', (done) => {
     const storage = createBucket();
     const upload = multer({ storage });
@@ -117,7 +115,7 @@ describe('multer storage', () => {
     const form = new UploadForm();
     const parser = upload.fields([
       { name: 'en', maxCount: 1 },
-      { name: 'sw', maxCount: 1 }
+      { name: 'sw', maxCount: 1 },
     ]);
 
     const content = file('text.txt');
@@ -140,5 +138,4 @@ describe('multer storage', () => {
       done(error, req);
     });
   });
-
 });

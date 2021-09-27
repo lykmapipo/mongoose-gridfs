@@ -1,26 +1,20 @@
-'use strict';
-
-// dependencies
-const path = require('path');
-const fs = require('fs');
-const _ = require('lodash');
-const actions = require('mongoose-rest-actions');
-const mime = require('mime');
-const {
-  expect
-} = require('@lykmapipo/mongoose-test-helpers');
-const {
-  createModel
-} = require(path.join(__dirname, '..'));
+import path from 'path';
+import fs from 'fs';
+import _ from 'lodash';
+import actions from 'mongoose-rest-actions';
+import mime from 'mime';
+import { expect } from '@lykmapipo/mongoose-test-helpers';
+import { createModel } from '../src';
 
 const isStream = (stream) => {
-  return stream !== null &&
+  return (
+    stream !== null &&
     typeof stream === 'object' &&
-    typeof stream.pipe === 'function';
+    typeof stream.pipe === 'function'
+  );
 };
 
 describe('gridfs model', () => {
-
   // collect ids
   let ids = [];
 
@@ -48,6 +42,7 @@ describe('gridfs model', () => {
 
   it('should create gridfs model with plugins', () => {
     const Image = createModel({ modelName: 'Image' }, (schema) => {
+      // eslint-disable-next-line no-param-reassign
       schema.statics.stats = (optns, done) => done(null, optns);
     });
 
@@ -59,8 +54,7 @@ describe('gridfs model', () => {
   });
 
   describe('instance', () => {
-
-    it('should write file to default bucket', done => {
+    it('should write file to default bucket', (done) => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -86,7 +80,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should write file to custom bucket', done => {
+    it('should write file to custom bucket', (done) => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -111,16 +105,16 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should read file content to `Buffer`', done => {
+    it('should read file content to `Buffer`', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
         if (file) {
-          file.read((error, content) => {
-            expect(error).to.not.exist;
+          file.read(($error, content) => {
+            expect($error).to.not.exist;
             expect(content).to.exist;
             expect(_.isBuffer(content)).to.be.true;
-            done(error, content);
+            done($error, content);
           });
         } else {
           done(error, file);
@@ -128,7 +122,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should return a readable stream if not callback', done => {
+    it('should return a readable stream if not callback', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
@@ -142,13 +136,13 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should unlink a file', done => {
+    it('should unlink a file', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.findOne(options, (error, file) => {
         if (file) {
-          file.unlink((error, unlinked) => {
-            expect(error).to.not.exist;
+          file.unlink(($error, unlinked) => {
+            expect($error).to.not.exist;
             expect(unlinked).to.exist;
             expect(unlinked._id).to.exist;
             expect(unlinked.filename).to.exist;
@@ -158,21 +152,18 @@ describe('gridfs model', () => {
             expect(unlinked.uploadDate).to.exist;
             // expect(unlinked.md5).to.exist;
             ids = _.tail(ids);
-            done(error, unlinked);
+            done($error, unlinked);
           });
         } else {
           done(error, file);
         }
       });
     });
-
   });
-
 
   // static
   describe('static', () => {
-
-    it('should write file to default bucket', done => {
+    it('should write file to default bucket', (done) => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -197,7 +188,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should write file to custom bucket', done => {
+    it('should write file to custom bucket', (done) => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -221,7 +212,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should read file content to `Buffer`', done => {
+    it('should read file content to `Buffer`', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.read(options, (error, content) => {
@@ -232,7 +223,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should return a readable stream if no callback', done => {
+    it('should return a readable stream if no callback', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       const readstream = File.read(options);
@@ -240,7 +231,7 @@ describe('gridfs model', () => {
       done();
     });
 
-    it('should unlink a file', done => {
+    it('should unlink a file', (done) => {
       const File = createModel();
       const options = { _id: ids[0] };
       File.unlink(options, (error, unlinked) => {
@@ -257,14 +248,13 @@ describe('gridfs model', () => {
         done(error, unlinked);
       });
     });
-
   });
 
   describe('plugins', () => {
     let Archive;
     let archive;
 
-    before(done => {
+    before((done) => {
       const filename = 'text.txt';
       const contentType = mime.getType('.txt');
       const options = { filename, contentType };
@@ -289,7 +279,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should list files with get', done => {
+    it('should list files with get', (done) => {
       Archive.get((error, results) => {
         expect(error).to.not.exist;
         expect(results).to.exist;
@@ -307,13 +297,14 @@ describe('gridfs model', () => {
         expect(results.pages).to.be.at.least(1);
         expect(results.lastModified).to.exist;
         expect(results.hasMore).to.exist;
-        expect(_.maxBy(results.data, 'createdAt').createdAt)
-          .to.be.at.most(results.lastModified);
+        expect(_.maxBy(results.data, 'createdAt').createdAt).to.be.at.most(
+          results.lastModified
+        );
         done(error, results);
       });
     });
 
-    it('should search files with get', done => {
+    it('should search files with get', (done) => {
       const options = { filter: { q: archive.filename } };
       Archive.get(options, (error, results) => {
         expect(error).to.not.exist;
@@ -332,13 +323,14 @@ describe('gridfs model', () => {
         expect(results.pages).to.be.at.least(1);
         expect(results.lastModified).to.exist;
         expect(results.hasMore).to.exist;
-        expect(_.maxBy(results.data, 'createdAt').createdAt)
-          .to.be.at.most(results.lastModified);
+        expect(_.maxBy(results.data, 'createdAt').createdAt).to.be.at.most(
+          results.lastModified
+        );
         done(error, results);
       });
     });
 
-    it('should get single file with getById', done => {
+    it('should get single file with getById', (done) => {
       Archive.getById(archive._id, (error, found) => {
         expect(error).to.not.exist;
         expect(found).to.exist;
@@ -353,7 +345,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should update existing file metadata with patch', done => {
+    it('should update existing file metadata with patch', (done) => {
       const updates = { aliases: ['lime', 'senior'] };
       Archive.patch(archive._id.toString(), updates, (error, updated) => {
         expect(error).to.not.exist;
@@ -370,7 +362,7 @@ describe('gridfs model', () => {
       });
     });
 
-    it('should update existing file metadata with put', done => {
+    it('should update existing file metadata with put', (done) => {
       const updates = { aliases: ['lime', 'senior'] };
       Archive.put(archive._id.toString(), updates, (error, updated) => {
         expect(error).to.not.exist;
@@ -386,7 +378,5 @@ describe('gridfs model', () => {
         done(error, updated);
       });
     });
-
   });
-
 });

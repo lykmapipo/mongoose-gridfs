@@ -1,4 +1,22 @@
-*.swp
-.DS_Store
-node_modules/
-npm-debug.log
+# Logs
+logs
+*.log
+
+# Runtime
+pids
+*.pid
+*.seed
+
+# Temporary
+.tmp
+.grunt
+
+# Dependencies
+node_modules
+
+# Coverage
+libcov
+coverage
+.nyc_output
+
+# Docs

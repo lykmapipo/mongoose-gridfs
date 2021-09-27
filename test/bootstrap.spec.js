@@ -1,7 +1,5 @@
-'use strict';
+import { connect, drop } from '@lykmapipo/mongoose-test-helpers';
 
-const { connect, drop } = require('@lykmapipo/mongoose-test-helpers');
+before((done) => connect(done));
 
-before(done => connect(done));
-
-after(done => drop(done));
+after((done) => drop(done));

@@ -1,25 +1,23 @@
-'use strict';
-
-
-/* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const fs = require('fs');
-const mime = require('mime');
-const { expect } = require('chai');
-const {
+import path from 'path';
+import _ from 'lodash';
+import fs from 'fs';
+import mime from 'mime';
+import { expect } from '@lykmapipo/mongoose-test-helpers';
+import {
   DEFAULT_BUCKET_NAME,
   DEFAULT_BUCKET_MODEL_NAME,
   DEFAULT_BUCKET_CHUNK_SIZE,
   DEFAULT_BUCKET_OPTIONS,
   createBucket,
-  GridFSBucket
-} = require(path.join(__dirname, '..'));
+  GridFSBucket,
+} from '../src';
 
 const isStream = (stream) => {
-  return stream !== null &&
+  return (
+    stream !== null &&
     typeof stream === 'object' &&
-    typeof stream.pipe === 'function';
+    typeof stream.pipe === 'function'
+  );
 };
 
 describe('mongoose gridfs', () => {
@@ -55,7 +53,7 @@ describe('mongoose gridfs', () => {
     expect(DEFAULT_BUCKET_OPTIONS).to.be.eql({
       modelName: 'File',
       bucketName: 'fs',
-      chunkSizeBytes: 255 * 1024
+      chunkSizeBytes: 255 * 1024,
     });
   });
 
@@ -78,7 +76,6 @@ describe('mongoose gridfs', () => {
     expect(bucket.collectionName).to.exist;
     expect(bucket.collectionName).to.be.equal('lyrics.files');
   });
-
 
   // writers
   it('should write to default bucket', (done) => {
@@ -148,10 +145,9 @@ describe('mongoose gridfs', () => {
     expect(writestream).to.exist;
     expect(isStream(writestream)).to.be.true;
 
-    writestream.on('error', error => done(error));
-    writestream.on('finish', file => done(null, file));
+    writestream.on('error', (error) => done(error));
+    writestream.on('finish', (file) => done(null, file));
   });
-
 
   // readers
   it('should read file content to `Buffer` by _id', (done) => {
@@ -184,7 +180,6 @@ describe('mongoose gridfs', () => {
     done();
   });
 
-
   // finders
   it('should obtain file details using its _id', (done) => {
     const bucket = createBucket();
@@ -214,7 +209,6 @@ describe('mongoose gridfs', () => {
     });
   });
 
-
   // removers
   it('should remove a file using its id', (done) => {
     const bucket = createBucket();
@@ -224,5 +218,4 @@ describe('mongoose gridfs', () => {
       done(error, result);
     });
   });
-
 });
