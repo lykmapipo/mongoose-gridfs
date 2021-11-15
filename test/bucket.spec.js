@@ -209,6 +209,17 @@ describe('mongoose gridfs', () => {
     });
   });
 
+  it('should obtain all file details', (done) => {
+    const bucket = createBucket();
+    bucket.find({}, async (error, cursor) => {
+      expect(error).to.not.exist;
+      cursor.eachAsync(async (file, idx) => {
+        expect(file._id).to.eql(ids[idx]);
+      });
+      done(error, cursor);
+    });
+  });
+
   // removers
   it('should remove a file using its id', (done) => {
     const bucket = createBucket();
