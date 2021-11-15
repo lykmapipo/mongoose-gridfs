@@ -417,6 +417,43 @@ GridFSBucket.prototype.findById = function findById(_id, done) {
   return this.findOne({ _id }, done);
 };
 
+/**
+ * @function find
+ * @name find
+ * @description find all existing file using options provided
+ * @param {object} optns valid find criteria
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {object} cursor to existing file details
+ * @author lally elias <lallyelias87@mail.com>
+ * @license MIT
+ * @since 1.3.0
+ * @version 1.3.0
+ * @instance
+ * @example
+ *
+ * const bucket = createBucket()
+ * bucket.find({ }, (error, cursor) => { ... })
+ * bucket.find({ filename }, (error, cursor) => { ... })
+ */
+GridFSBucket.prototype.find = function find(optns, done) {
+  // ensure file find criteria
+  const options = _.merge({}, optns);
+
+  // find all existing files
+  try {
+    const cursor = this.find(options).cursor();
+    if (!cursor) {
+      const error = new Error('Collection not found');
+      error.status = 400;
+      return done(error);
+    }
+    return done(null, cursor);
+  } catch (error) {
+    // catch find errors
+    return done(error);
+  }
+};
+
 /* multer */
 
 /**
