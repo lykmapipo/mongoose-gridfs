@@ -22,10 +22,3 @@
     },
     "include": ["lib"] //lib directory containins the main index.js file is packeed for npm package, hence add type definition to index.js only. 
 }
-
-
-
-
-
-
-  
