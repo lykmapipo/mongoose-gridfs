@@ -14,7 +14,7 @@
       // Types should go into this directory.
       // Removing this would place the .d.ts files
       // next to the .js files
-      // "outDir": "DESTINATION_DIR_HERE"
+      // "outDir": "DESTINATION_DIR_HERE" -->Specify the directory name, to be the same as build folder of the main file, if using any build tools.
       // go to js file when using IDE functions like
       // "Go to Definition" in VSCode
       "declarationMap": true,
