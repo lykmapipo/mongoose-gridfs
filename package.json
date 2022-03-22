@@ -96,7 +96,7 @@
     "lint-staged": "^11.2.6",
     "lodash.template": "^4.5.0",
     "mime": "^2.6.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mocha": "^9.2.0",
     "mongoose": ">=6.1.9",
     "mongoose-rest-actions": ">=0.30.6",
