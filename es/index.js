@@ -179,15 +179,12 @@ function createFileSchema(bucket) {
    */
   FileSchema.methods.unlink = function unlink(done) {
     // obtain file details
-    return this.constructor.findById(
-      // eslint-disable-next-line no-underscore-dangle
-      this._id,
-      function afterFindFile(error, file) {
-        // back-off error
-        if (error) {
-          return done(error);
-        }
-        // remove file from gridfs
+    this.constructor
+      .findById(
+        // eslint-disable-next-line no-underscore-dangle
+        this._id
+      )
+      .then((file) => {
         return bucket.deleteFile(
           // eslint-disable-next-line no-underscore-dangle
           file._id,
@@ -195,8 +192,14 @@ function createFileSchema(bucket) {
             done($error, file);
           }
         );
-      }
-    );
+      })
+      .catch((error) => {
+        done(error);
+      });
+
+    /*
+
+     */
   };
 
   /* statics */
@@ -299,19 +302,18 @@ function createFileSchema(bucket) {
    * });
    */
   FileSchema.statics.unlink = function unlink(_id, done) {
-    return this.findById(_id, function afterFindById(error, file) {
-      // back-off error
-      if (error) {
-        return done(error);
-      }
+    this.findById(_id)
+      .then((file) => {
+        if (!file) {
+          return done(new Error('not found'));
+        }
 
-      if (!file) {
-        return done(new Error('not found'));
-      }
-
-      // remove file from gridfs
-      return file.unlink(done);
-    });
+        // remove file from gridfs
+        return file.unlink(done);
+      })
+      .catch((error) => {
+        done(error);
+      });
   };
 
   // return grifs schema
