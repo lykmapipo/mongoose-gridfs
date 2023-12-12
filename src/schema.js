@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Schema, Mixed, copyInstance } from '@lykmapipo/mongoose-common';
+import { copyInstance, Mixed, Schema } from '@lykmapipo/mongoose-common';
 
 /* constants */
 const WRITABLES = ['_id', 'filename', 'contentType', 'aliases', 'metadata'];
@@ -93,8 +93,13 @@ function createFileSchema(bucket) {
           return done(error);
         }
         // read file details
-        // eslint-disable-next-line no-underscore-dangle
-        return this.constructor.findById(created._id, done);
+        return (
+          this.constructor
+            // eslint-disable-next-line no-underscore-dangle
+            .findById(created._id)
+            .then((res) => done(null, res))
+            .catch((err) => done(err))
+        );
       }.bind(this)
     );
   };
@@ -176,14 +181,12 @@ function createFileSchema(bucket) {
    */
   FileSchema.methods.unlink = function unlink(done) {
     // obtain file details
-    return this.constructor.findById(
-      // eslint-disable-next-line no-underscore-dangle
-      this._id,
-      function afterFindFile(error, file) {
-        // back-off error
-        if (error) {
-          return done(error);
-        }
+    return this.constructor
+      .findById(
+        // eslint-disable-next-line no-underscore-dangle
+        this._id
+      )
+      .then((file) => {
         // remove file from gridfs
         return bucket.deleteFile(
           // eslint-disable-next-line no-underscore-dangle
@@ -192,8 +195,8 @@ function createFileSchema(bucket) {
             done($error, file);
           }
         );
-      }
-    );
+      })
+      .catch((error) => done(error));
   };
 
   /* statics */
@@ -296,19 +299,16 @@ function createFileSchema(bucket) {
    * });
    */
   FileSchema.statics.unlink = function unlink(_id, done) {
-    return this.findById(_id, function afterFindById(error, file) {
-      // back-off error
-      if (error) {
-        return done(error);
-      }
+    return this.findById(_id)
+      .then((file) => {
+        if (!file) {
+          return done(new Error('not found'));
+        }
 
-      if (!file) {
-        return done(new Error('not found'));
-      }
-
-      // remove file from gridfs
-      return file.unlink(done);
-    });
+        // remove file from gridfs
+        return file.unlink(done);
+      })
+      .catch((error) => done(error));
   };
 
   // return grifs schema
