@@ -25,7 +25,7 @@ mongoose [gridfs](https://docs.mongodb.com/manual/core/gridfs/) on top of [new g
 
 ## Installation
 ```sh
-$ npm install --save mongoose mongoose-gridfs
+$ npm install --save mongoose @procube/mongoose-gridfs
 ```
 
 ## Usage

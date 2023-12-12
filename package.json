@@ -1,5 +1,6 @@
 {
-  "name": "@procube-open/mongoose-gridfs",
+  "name": "@procube/mongoose-gridfs",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
