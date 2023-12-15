@@ -194,7 +194,7 @@ function createFileSchema(bucket) {
         return bucket.deleteFile(
           // eslint-disable-next-line no-underscore-dangle
           file._id,
-          function afterDeleteFile($error /* , id */) {
+          function afterDeleteFile($error , id ) {
             done($error, file);
           }
         );
@@ -301,8 +301,8 @@ function createFileSchema(bucket) {
    *  //=> {_id: ..., filename: ..., ... }
    * });
    */
-  FileSchema.statics.unlink = function unlink(_id, done) {
-    return this.findById(_id)
+  FileSchema.statics.unlink = function unlink(opts, done) {
+    return this.findOne(opts)
       .then((file) => {
         if (!file) {
           return done(new Error('not found'));
